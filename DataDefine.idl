@@ -1,0 +1,134 @@
+// 星上时间广播数据类型 main -> slave
+struct TimeBroadcast
+{
+    octet number;
+    unsigned long seconds;
+    unsigned long milliseconds;
+};
+
+// 卫星轨道广播数据 main -> slave
+struct TrackBroadcast
+{
+    octet trackType;
+    unsigned long seconds;
+    unsigned long microseconds;
+
+    // m
+    float axisX;
+    float axisY;
+    float axisZ;
+
+    // m/s
+    float speedX;
+    float speedY;
+    float speedZ;
+};
+
+// 卫星姿态广播数据 main -> slave
+struct AttitudeBroadcast
+{
+    octet gap;
+    unsigned long seconds;
+    unsigned long microseconds;
+
+    // rad
+    float roll;
+    float pitch;
+    float yaw;
+
+    // rad/s
+    float Vroll;
+    float Vpitch;
+    float Vyaw;
+};
+
+// 卫星轨道预报 main -> slave
+struct TrackPredict
+{
+    octet number;
+    unsigned long timestamp;
+
+    // m
+    unsigned long locX;
+    unsigned long locY;
+    unsigned long locZ;
+
+    // cm/s
+    unsigned long speedX;
+    unsigned long speedY;
+    unsigned long speedZ;
+};
+
+// 遥测请求指令 main -> slave
+struct TelemetryRequest
+{
+    octet number;
+    octet command[6];
+};
+
+// 遥测返回数据 slave -> main
+struct TelemetryReply
+{
+    octet loctime4;
+    octet loctime3;
+    octet loctime2;
+    octet loctime1;
+
+    octet sysState;
+    octet commandCnt;
+    octet busSignature;
+    octet subsysState;
+
+    octet imgMode;
+    octet startTimeHigh;
+    octet startTimeLow;
+    octet subbandCont;
+
+    octet argTelemetry1;
+    octet taskNumber;
+    octet cmdQueueLength;
+    octet digitalTelemetry1;
+    octet digitalTelemetry2;
+
+    octet power100M;
+    octet RFFM;
+    octet RFamplify;
+    octet RFoscillate;
+
+    octet RFmainOsc5v;
+    octet RFbackOsc5v;
+    octet RFmain8p5v;
+    octet RFback8p5v;
+    octet RFmain5v;
+    octet RFback5v;
+
+    octet captureMain5v;
+    octet captureBack5v;
+    octet controlMain5v;
+    octet controlBack5v;
+
+    octet realMod1;
+    octet realMod2;
+    octet realMod3;
+    octet realMod4;
+
+    octet argTelemetry2;    
+    octet argTelemetry3;   
+    octet argTelemetry4;   
+    octet argTelemetry5;   
+    octet argTelemetry6;   
+};
+
+// 标准工作参数包 main -> slave
+struct ParamPackage
+{
+    unsigned short packSize;
+    unsigned short contentCtrl;
+    unsigned short taskNumber;
+    octet block1[60];
+    octet block2[60];
+    octet block3[60];
+    octet block4[60];
+    octet matrixSelect;
+    octet gap;
+};

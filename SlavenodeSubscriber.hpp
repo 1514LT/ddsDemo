@@ -1,0 +1,6 @@
+#ifndef SLAVENODESUBSCRIBER_HPP
+#define SLAVENODESUBSCRIBER_HPP
+
+
+
+#endif

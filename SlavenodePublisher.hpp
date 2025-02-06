@@ -1,0 +1,5 @@
+#ifndef SLAVENODEPUBLISHER_HPP
+#define SLAVENODEPUBLISHER_HPP
+
+
+#endif
