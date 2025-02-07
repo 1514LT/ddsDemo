@@ -5,37 +5,29 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(NOT fastrtps_DIR)
-    set(fastrtps_DIR $ENV{RTPS2DIR})
+add_library(DDSBase
+            SHARED
+            DataDefine.cxx 
+            DataDefinePubSubTypes.cxx
+            MainnodePublisher.cpp
+            MainnodeSubscriber.cpp
+            SlavenodePublisher.cpp
+            SlavenodeSubscriber.cpp)   
+
+add_executable(${PROJECT_NAME} ${DDSBase} Main.cpp)
+                               
+if(DEFINED ARM64)
+link_directories( ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64)
+target_link_libraries(${PROJECT_NAME}
+                      DDSBase 
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastrtps.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastcdr.so)
+else()
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib_x86)
+target_link_libraries(${PROJECT_NAME}
+                      DDSBase 
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastrtps.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastcdr.so)
 endif()
-if(NOT fastcdr_DIR)
-    set(fastcdr_DIR $ENV{DDS2CDRDIR})
-endif()
-if(NOT foonathan_memory_DIR)
-    set(foonathan_memory_DIR $ENV{DDS2FOONDIR})
-endif()
 
-find_package(fastrtps 2.14 REQUIRED) 
-find_package(fastcdr 2 REQUIRED)
-find_package(foonathan_memory REQUIRED)
-
-list(APPEND SOURCEFILES DataDefine.cxx 
-                        DataDefinePubSubTypes.cxx
-                        MainnodePublisher.cpp
-                        MainnodeSubscriber.cpp
-                        SlavenodePublisher.cpp
-                        SlavenodeSubscriber.cpp
-                        Main.cpp
-                        )
-
-add_executable(${PROJECT_NAME} ${SOURCEFILES})
-
-target_include_directories(${PROJECT_NAME} 
-                                PRIVATE
-                                    ${fastrtps_INCLUDE_DIR}
-                                    ${fastcdr_INCLUDE_DIR}
-                                    ${foonathan_memory_INCLUDE_DIR}
-                                    )
-
-target_link_libraries(${PROJECT_NAME} fastrtps fastcdr foonathan_memory)
 

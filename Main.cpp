@@ -79,7 +79,7 @@ int main(int argc, char * argv[])
           // to do fill TimeBroadcast Data;
           // printf("timeBroadcastMatched\n");
           TimeBroadcast timeBroadcast;
-          timeBroadcast.number(10);
+          timeBroadcast.number(0x30);
           timeBroadcast.seconds(12345);
           timeBroadcast.milliseconds(678);
           publisher.publishTimeBroadcast(timeBroadcast);

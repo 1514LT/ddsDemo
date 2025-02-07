@@ -35,7 +35,7 @@ void MainnodeSubListener::on_data_available(DataReader *reader)
         {
             if (info.valid_data)
             {
-              printf("seconds:%u\n,milliseconds:%u\n",msg.seconds(),msg.milliseconds());
+              printf("number:%d\nseconds:%u\nmilliseconds:%u\n",(int)msg.number(),msg.seconds(),msg.milliseconds());
             }
         }
     }
