@@ -6,6 +6,8 @@
 
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
+#include <fastdds/dds/subscriber/DataReader.hpp>
+#include <fastdds/dds/subscriber/DataReaderListener.hpp>
 #include <fastdds/dds/publisher/DataWriter.hpp>
 #include <fastdds/dds/publisher/DataWriterListener.hpp>
 #include <fastdds/dds/topic/TypeSupport.hpp>
@@ -31,6 +33,7 @@ public:
     ~MainnodePublisher();
 
     bool init();
+    bool init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id = 0);
 
     bool timeBroadcastMatched();
     bool publishTimeBroadcast(TimeBroadcast & timeBroadcast);
@@ -59,6 +62,7 @@ private:
     MainnodePubListener m_AttitudeBroadcastListener;
     MainnodePubListener m_trackPredictListener;
     MainnodePubListener m_telemetryRequestListener;
+    MainnodePubListener m_telemetryReplyListener;
     MainnodePubListener m_paramPackageListener;
 
     DomainParticipant* m_participant;

@@ -21,13 +21,15 @@ link_directories( ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64)
 target_link_libraries(${PROJECT_NAME}
                       DDSBase 
                       ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastrtps.so
-                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastcdr.so)
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastcdr.so
+                      pthread)
 else()
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib_x86)
 target_link_libraries(${PROJECT_NAME}
                       DDSBase 
                       ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastrtps.so
-                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastcdr.so)
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastcdr.so
+                      pthread)
 endif()
 
 

@@ -14,12 +14,12 @@ void MainnodePubListener::on_publication_matched(DataWriter *dataWriter, const P
     if(info.current_count_change == 1)
     {
         m_matched = info.current_count;
-        // std::cout << "Publisher matched, topic:" + dataWriter->get_topic()->get_name() +", count: " + std::to_string(info.current_count) << std::endl;
+        std::cout << "Publisher matched, topic:" + dataWriter->get_topic()->get_name() +", count: " + std::to_string(info.current_count) << std::endl;
     }
     else if(info.current_count_change == -1)
     {
         m_matched = info.current_count;
-        // std::cout << "Publisher unmatched, topic:" + dataWriter->get_topic()->get_name() + ", count: " + std::to_string(info.current_count) << std::endl;
+        std::cout << "Publisher unmatched, topic:" + dataWriter->get_topic()->get_name() + ", count: " + std::to_string(info.current_count) << std::endl;
     }
     else
     {
@@ -64,6 +64,35 @@ bool MainnodePublisher::initPubType(const std::string &topicName, const std::str
     }
     m_writers.push_back({topic,writer});
     return true;
+}
+bool MainnodePublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
+{
+  if(!(vt_topicName.size() == vt_typeName.size() && vt_typeName.size() == vt_dataType.size() && vt_dataType.size() == vt_listener.size()))
+  {
+    return false;
+  }
+    DomainParticipantQos paritcipantQos;
+    paritcipantQos.name("mainnode_publisher");
+    m_participant = DomainParticipantFactory::get_instance()->create_participant(domain_id,paritcipantQos);
+
+    if(!m_participant)
+    {
+        return false;
+    }
+
+    m_publisher = m_participant->create_publisher(PUBLISHER_QOS_DEFAULT, nullptr);
+    if(!m_publisher)
+    {
+        return false;
+    }
+    m_typeVec.reserve(vt_topicName.size());
+    m_writers.reserve(vt_topicName.size());
+  bool flag = true;
+  for(int i = 0; i < vt_topicName.size();i++)
+  {
+    flag && initPubType(vt_topicName[i],vt_typeName[i],vt_dataType[i],vt_listener[i]);
+  }
+  return flag;  
 }
 
 bool MainnodePublisher::init()

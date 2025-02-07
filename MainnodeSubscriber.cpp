@@ -3,6 +3,7 @@
 MainnodeSubListener::MainnodeSubListener()
     :m_samples(0)
 {
+
 }
 
 MainnodeSubListener::~MainnodeSubListener()
@@ -27,74 +28,31 @@ void MainnodeSubListener::on_subscription_matched(DataReader *reader, const Subs
 
 void MainnodeSubListener::on_data_available(DataReader *reader)
 {
-    SampleInfo info;
-    if (reader->get_topicdescription()->get_name() == "TimeBroadcastTopic")
-    {
-        TimeBroadcast msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
-              printf("number:%d\nseconds:%u\nmilliseconds:%u\n",(int)msg.number(),msg.seconds(),msg.milliseconds());
-            }
-        }
-    }
-    else if (reader->get_topicdescription()->get_name() == "TrackBroadcastTopic")
-    {
-        TrackBroadcast msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
+  SampleInfo info;
 
-            }
-        }
-    }
-    else if (reader->get_topicdescription()->get_name() == "AttitudeBroadcastTopic")
+  if (reader->get_topicdescription()->get_name() == "TelemetryReplyTopic")
+  {
+    printf("mainNode recv TelemetryReplyTopic\n");
+    TelemetryReply msg;
+    while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
     {
-        AttitudeBroadcast msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
-
-            }
-        }
+      
+      if (info.valid_data)
+      {
+        std::cout
+        << (int)msg.loctime1() << (int)msg.loctime2() << (int)msg.loctime3() << (int)msg.loctime4() << "\n"
+        << msg.sysState() << msg.commandCnt() << msg.busSignature() << msg.subsysState() << "\n"
+        << msg.imgMode() << msg.startTimeHigh() << msg.startTimeLow() << msg.subbandCont() << "\n"
+        << msg.argTelemetry1() << msg.taskNumber() << msg.cmdQueueLength() << msg.digitalTelemetry1() << "\n"
+        << msg.digitalTelemetry2() << msg.power100M() << msg.RFFM() << msg.RFamplify() << msg.RFoscillate() << "\n"
+        << msg.RFmainOsc5v() << msg.RFbackOsc5v() << msg.RFmain8p5v() << msg.RFback8p5v() << msg.RFmain5v() << "\n"
+        << msg.RFback5v() << msg.captureMain5v() << msg.captureBack5v() << msg.controlMain5v() << msg.controlBack5v() << "\n"
+        << msg.realMod1() << msg.realMod2() << msg.realMod3() << msg.realMod4() << "\n"
+        << msg.argTelemetry2() << msg.argTelemetry3() << msg.argTelemetry4() << msg.argTelemetry5() 
+        << msg.argTelemetry6() << std::endl;
+      }
     }
-    else if (reader->get_topicdescription()->get_name() == "TrackPredictTopic")
-    {
-        TrackPredict msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
-
-            }
-        }
-    }
-    else if (reader->get_topicdescription()->get_name() == "TelemetryRequestTopic")
-    {
-        TelemetryRequest msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
-
-            }
-        }
-    }
-    else if (reader->get_topicdescription()->get_name() == "ParamPackageTopic")
-    {
-        ParamPackage msg;
-        while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
-        {
-            if (info.valid_data)
-            {
-
-            }
-        }
-    }
-
+  }
 }
 
 MainnodeSubscriber::MainnodeSubscriber()
@@ -139,6 +97,34 @@ bool MainnodeSubscriber::initSubType(const std::string &topicName, const std::st
   m_readers.push_back({topic,reader});
   return true;
 }
+
+bool MainnodeSubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)
+{
+  if(!(vt_topicName.size() == vt_typeName.size() && vt_typeName.size() == vt_dataType.size() && vt_dataType.size() == vt_listener.size()))
+  {
+    return false;
+  }
+  DomainParticipantQos participantQos;
+  participantQos.name("mainnode_subscriber");
+  m_participant = DomainParticipantFactory::get_instance()->create_participant(domain_id,participantQos);
+  if(!m_participant)
+  {
+      return false;
+  }
+
+  m_subscriber = m_participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT,nullptr);
+  if(!m_subscriber)
+  {
+      return false;
+  }
+  bool flag = true;
+  for(int i = 0; i < vt_topicName.size();i++)
+  {
+    flag && initSubType(vt_topicName[i],vt_typeName[i],vt_dataType[i],vt_listener[i]);
+  }
+  return flag;
+}
+
 bool MainnodeSubscriber::init()
 {
     DomainParticipantQos participantQos;
@@ -155,10 +141,5 @@ bool MainnodeSubscriber::init()
         return false;
     }
     return
-    initSubType("TimeBroadcastTopic","TimeBroadcast",new  TimeBroadcastPubSubType,&m_timeBroadcastListener) &&
-    initSubType("TrackBroadcastTopic","TrackBroadcast",new TrackBroadcastPubSubType,&m_trackBroadcastListener) &&
-    initSubType("AttitudeBroadcastTopic","AttitudeBroadcast",new AttitudeBroadcastPubSubType,&m_AttitudeBroadcastListener) &&
-    initSubType("TrackPredictTopic","TrackPredict",new TrackPredictPubSubType,&m_trackPredictListener) &&
-    initSubType("TelemetryRequestTopic","TelemetryRequest",new TelemetryRequestPubSubType,&m_telemetryRequestListener) &&
-    initSubType("ParamPackageTopic","ParamPackage",new ParamPackagePubSubType,&m_paramPackageListener);
+    initSubType("TelemetryReplyTopic","TelemetryReply",new TelemetryReplyPubSubType,&m_telemetryReplyListener);
 }
