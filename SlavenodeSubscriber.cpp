@@ -2,7 +2,8 @@
 
 SlavenodeSubListener::SlavenodeSubListener():m_samples(0)
 {
-
+  m_publisher = std::make_shared<SlavenodePublisher>();
+  m_publisher->init();
 }
 
 SlavenodeSubListener::~SlavenodeSubListener()
@@ -57,7 +58,17 @@ void SlavenodeSubListener::on_data_available(DataReader * reader)
         {
             if (info.valid_data)
             {
-
+              std::cout << "gap: " << static_cast<int>(msg.gap()) << std::endl;
+              std::cout << "seconds: " << msg.seconds() << std::endl;
+              std::cout << "microseconds: " << msg.microseconds() << std::endl;
+          
+              std::cout << "roll (rad): " << msg.roll() << std::endl;
+              std::cout << "pitch (rad): " << msg.pitch() << std::endl;
+              std::cout << "yaw (rad): " << msg.yaw() << std::endl;
+          
+              std::cout << "Vroll (rad/s): " << msg.Vroll() << std::endl;
+              std::cout << "Vpitch (rad/s): " << msg.Vpitch() << std::endl;
+              std::cout << "Vyaw (rad/s): " << msg.Vyaw() << std::endl;
             }
         }
     }
@@ -68,7 +79,11 @@ void SlavenodeSubListener::on_data_available(DataReader * reader)
         {
             if (info.valid_data)
             {
-
+              std::cout << "TrackPredict Data:\n";
+              std::cout << "Number: " << static_cast<unsigned int>(msg.number()) << "\n";
+              std::cout << "Timestamp: " << msg.timestamp() << "\n";
+              std::cout << "Location (X, Y, Z): " << msg.locX() << ", " << msg.locY() << ", " << msg.locZ() << " m\n";
+              std::cout << "Speed (X, Y, Z): " << msg.speedX() << ", " << msg.speedY() << ", " << msg.speedZ() << " cm/s\n";
             }
         }
     }
@@ -88,11 +103,9 @@ void SlavenodeSubListener::on_data_available(DataReader * reader)
                 i++;
               }
               printf("number:%d\n",(int)msg.number());
-              // send telemetryReply msg
-              #if 0
-              if(m_telemetryReplyPublisher->telemetryReplyMatched())
+
+              if(m_publisher->telemetryReplyMatched())
               {
-                printf("=====>telemetryReplyMatched\n");
                 TelemetryReply telemetryReply;
                 telemetryReply.loctime4(0x11);
                 telemetryReply.loctime3(0x11);
@@ -135,9 +148,9 @@ void SlavenodeSubListener::on_data_available(DataReader * reader)
                 telemetryReply.argTelemetry4(0x11);
                 telemetryReply.argTelemetry5(0x11);
                 telemetryReply.argTelemetry6(0x11);
-                m_telemetryReplyPublisher->publishTelemetryReply(telemetryReply);
+                m_publisher->publishTelemetryReply(telemetryReply);
               }
-              #endif
+
             }
         }
     }
@@ -148,13 +161,44 @@ void SlavenodeSubListener::on_data_available(DataReader * reader)
         {
             if (info.valid_data)
             {
+              std::cout << "ParamPackage Data:\n";
+              std::cout << "Pack Size: " << msg.packSize() << "\n";
+              std::cout << "Content Control: " << msg.contentCtrl() << "\n";
+              std::cout << "Task Number: " << msg.taskNumber() << "\n";
+              std::array<unsigned char,60> block1 = msg.block1();
+              std::array<unsigned char,60> block2 = msg.block2();
+              std::array<unsigned char,60> block3 = msg.block3();
+              std::array<unsigned char,60> block4 = msg.block4();
 
+              std::cout << "block1:";
+              ShowArry(block1);
+
+              std::cout << "block2:";
+              ShowArry(block2);
+
+              std::cout << "block3:";
+              ShowArry(block3);
+
+              std::cout << "block4:";
+              ShowArry(block4);
+
+              std::cout << "matrixSelect: " << (int)msg.matrixSelect()  << std::endl;
+              std::cout << "gap: " << (int)msg.gap()  << std::endl;
             }
         }
     }
 }
 
-
+void SlavenodeSubListener::ShowArry(std::array<unsigned char,60> block)
+{
+  int i = 0;
+  for(auto value :block)
+  {
+    printf("block[%d]:%d ",i,(int)value);
+    i++;
+  }
+  printf("\n");
+}
 SlavenodeSubscriber::SlavenodeSubscriber()
   :m_participant(nullptr),
   m_subscriber(nullptr),

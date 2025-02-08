@@ -3,6 +3,7 @@
 #include "DataDefine.h"
 #include "DataDefinePubSubTypes.h"
 #include "MainnodePublisher.hpp"
+#include "SlavenodePublisher.hpp"
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
 #include <fastdds/dds/subscriber/DataReader.hpp>
@@ -24,8 +25,10 @@ public:
   void on_subscription_matched(DataReader * reader, const SubscriptionMatchedStatus & info) override;
 
   void on_data_available(DataReader * reader) override;
+  void ShowArry(std::array<unsigned char,60> block);
 private:
     std::atomic_int m_samples;
+    std::shared_ptr<SlavenodePublisher> m_publisher;
 };
 
 
@@ -48,7 +51,6 @@ private:
   std::vector<std::pair<Topic*,DataReader*> > m_readers;
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
-  SlavenodeSubListener m_listener;
 
   SlavenodeSubListener m_timeBroadcastListener;
   SlavenodeSubListener m_trackBroadcastListener;

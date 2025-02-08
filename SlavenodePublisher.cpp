@@ -125,5 +125,5 @@ bool SlavenodePublisher::telemetryReplyMatched()
 
 bool SlavenodePublisher::publishTelemetryReply(TelemetryReply & telemetryReply)
 {
-  return m_writers.size() > 4 && m_writers[4].second->write(&telemetryReply);
+  return !m_writers.empty() && m_writers[0].second->write(&telemetryReply);
 }

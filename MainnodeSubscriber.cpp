@@ -32,7 +32,6 @@ void MainnodeSubListener::on_data_available(DataReader *reader)
 
   if (reader->get_topicdescription()->get_name() == "TelemetryReplyTopic")
   {
-    printf("mainNode recv TelemetryReplyTopic\n");
     TelemetryReply msg;
     while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
     {
@@ -41,15 +40,16 @@ void MainnodeSubListener::on_data_available(DataReader *reader)
       {
         std::cout
         << (int)msg.loctime1() << (int)msg.loctime2() << (int)msg.loctime3() << (int)msg.loctime4() << "\n"
-        << msg.sysState() << msg.commandCnt() << msg.busSignature() << msg.subsysState() << "\n"
-        << msg.imgMode() << msg.startTimeHigh() << msg.startTimeLow() << msg.subbandCont() << "\n"
-        << msg.argTelemetry1() << msg.taskNumber() << msg.cmdQueueLength() << msg.digitalTelemetry1() << "\n"
-        << msg.digitalTelemetry2() << msg.power100M() << msg.RFFM() << msg.RFamplify() << msg.RFoscillate() << "\n"
-        << msg.RFmainOsc5v() << msg.RFbackOsc5v() << msg.RFmain8p5v() << msg.RFback8p5v() << msg.RFmain5v() << "\n"
-        << msg.RFback5v() << msg.captureMain5v() << msg.captureBack5v() << msg.controlMain5v() << msg.controlBack5v() << "\n"
-        << msg.realMod1() << msg.realMod2() << msg.realMod3() << msg.realMod4() << "\n"
-        << msg.argTelemetry2() << msg.argTelemetry3() << msg.argTelemetry4() << msg.argTelemetry5() 
-        << msg.argTelemetry6() << std::endl;
+        << (int)msg.sysState() << (int)msg.commandCnt() << (int)msg.busSignature() << (int)msg.subsysState() << "\n"
+        << (int)msg.imgMode() << (int)msg.startTimeHigh() << (int)msg.startTimeLow() << (int)msg.subbandCont() << "\n"
+        << (int)msg.argTelemetry1() << (int)msg.taskNumber() << (int)msg.cmdQueueLength() << (int)msg.digitalTelemetry1() << "\n"
+        << (int)msg.digitalTelemetry2() << (int)msg.power100M() << (int)msg.RFFM() << (int)msg.RFamplify() << "\n"
+        << (int)msg.RFoscillate() << (int)msg.RFmainOsc5v() << (int)msg.RFbackOsc5v() << (int)msg.RFmain8p5v() << "\n"
+        << (int)msg.RFback8p5v() << (int)msg.RFmain5v()  << (int)msg.RFback5v() << (int)msg.captureMain5v()  << "\n"
+        << (int)msg.captureBack5v() << (int)msg.controlMain5v() << (int)msg.controlBack5v() << "\n"
+        << (int)msg.realMod1() << (int)msg.realMod2() << (int)msg.realMod3() << (int)msg.realMod4() << "\n"
+        << (int)msg.argTelemetry2() << (int)msg.argTelemetry3() << (int)msg.argTelemetry4() << (int)msg.argTelemetry5() 
+        << (int)msg.argTelemetry6() << std::endl;
       }
     }
   }
