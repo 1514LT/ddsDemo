@@ -1,0 +1,80 @@
+// 目标信息
+struct Target
+{
+   unsigned short targetNumber;
+   octet time[6];
+   // 经度 纬度
+   long longitude;
+   long latitude;
+   // 高程
+   unsigned short elevation;
+   // 优先级
+   octet Priority;
+   // 置信度
+   octet confidenceDegree;
+   // 情报类型
+   octet informationType;
+   // 位置精度
+   octet positionAccuracy;
+   // 成像模式
+   octet imagingMode;
+   // 航向
+   unsigned short desiredTrack;
+   // 航速
+   unsigned short shipSpeed;
+   octet back[5];
+};
+
+// 星间引导信息 A -> B || A -> B -> C
+struct GuidanceInfo
+{
+  unsigned short beatCount;
+  octet targetCount;
+  unsigned short node;
+  octet targetType;
+  Target First;
+  Target Second;
+  Target Third;
+  Target Fourth;
+  Target Fifth;
+};
+
+// 成像星规划结果反馈 B -> A || C -> B -> A
+struct ReplyInfo
+{
+  unsigned short targetNumber;
+  unsigned short handleNumber;
+  unsigned short sucessNumber;
+  unsigned short executionNumber;
+  unsigned short ownTargetNumber;
+
+  unsigned short number1;
+  unsigned short resultNumer1;
+
+  unsigned short number2;
+  unsigned short resultNumer2;
+
+  unsigned short number3;
+  unsigned short resultNumer3;
+
+  unsigned short number4;
+  unsigned short resultNumer4;
+
+  unsigned short number5;
+  unsigned short resultNumer5;
+
+  unsigned short number6;
+  unsigned short resultNumer6;
+
+  unsigned short number7;
+  unsigned short resultNumer7;
+
+  unsigned short number8;
+  unsigned short resultNumer8;
+
+  unsigned short number9;
+  unsigned short resultNumer9;
+
+  unsigned short number10;
+  unsigned short resultNumer10; 
+};
