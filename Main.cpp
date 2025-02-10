@@ -27,7 +27,7 @@ static void printHelp()
 int main(int argc, char const *argv[])
 {
   int timeinterval = 1000;
-    bool mainNode = true;
+    int mainNode = 0;
     if(argc < 2)
     {
         std::cerr << "error: missing node argument" << std::endl;
@@ -35,13 +35,17 @@ int main(int argc, char const *argv[])
     }
 
     std::string arg1 = argv[1];
-    if(arg1 == "main")
+    if(arg1 == "nodeA")
     {
-        mainNode = true;
+        mainNode = 1;
     }
-    else if(arg1 == "slave")
+    else if(arg1 == "nodeB")
     {
-        mainNode = false;
+        mainNode = 2;
+    }
+    else if(arg1 == "nodeC")
+    {
+      mainNode = 3;
     }
     else if(arg1 == "-h" || arg1 == "--help") 
     {
@@ -71,12 +75,17 @@ int main(int argc, char const *argv[])
         }
 
     }
-    if(mainNode)
+    if(mainNode == 1)
     {
+      // nodeA
     }
-    else
+    else if (mainNode == 2)
     {
-      
+      // node B
+    }
+    else if(mainNode == 3)
+    {
+      // node C
     }
   return 0;
 }

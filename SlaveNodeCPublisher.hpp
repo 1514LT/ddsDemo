@@ -14,4 +14,44 @@
 #include <fastdds/dds/publisher/Publisher.hpp>
 
 using namespace eprosima::fastdds::dds;
+
+class SlaveNodeCPubListener :public DataWriterListener
+{
+private:
+  /* data */
+public:
+  SlaveNodeCPubListener(/* args */);
+  ~SlaveNodeCPubListener() override;
+public:
+  std::atomic_int m_matched;
+public:
+  void on_publication_matched(DataWriter * dataWriter, const PublicationMatchedStatus & info) override;
+};
+
+
+class SlaveNodeCPublisher
+{
+private:
+  SlaveNodeBPubListener m_replyInfoListener;
+
+  DomainParticipant* m_participant;
+  Publisher* m_publisher;
+
+  std::vector<TypeSupport> m_typeVec;
+
+  std::vector<std::pair<Topic*,DataWriter*> > m_writers;
+public:
+  SlaveNodeCPublisher();
+  ~SlaveNodeCPublisher();
+public:
+  bool initPubType(const std::string & topicName, const std::string & typeName, TopicDataType * dataType, DataWriterListener * listener);
+  bool init();
+  bool init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id = 0);
+
+  bool replayInfoMatched();
+  bool publishReplyInfo(ReplyInfo &replyInfo);
+};
+
+
+
 #endif
