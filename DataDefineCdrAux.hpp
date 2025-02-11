@@ -30,7 +30,7 @@ constexpr uint32_t GuidanceInfo_max_key_cdr_typesize {0UL};
 constexpr uint32_t Target_max_cdr_typesize {37UL};
 constexpr uint32_t Target_max_key_cdr_typesize {0UL};
 
-constexpr uint32_t ReplyInfo_max_cdr_typesize {54UL};
+constexpr uint32_t ReplyInfo_max_cdr_typesize {56UL};
 constexpr uint32_t ReplyInfo_max_key_cdr_typesize {0UL};
 
 

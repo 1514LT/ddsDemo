@@ -30,7 +30,8 @@ struct GuidanceInfo
 {
   unsigned short beatCount;
   octet targetCount;
-  unsigned short node;
+  octet targetNode;
+  octet startNode;
   octet targetType;
   Target First;
   Target Second;
@@ -47,34 +48,36 @@ struct ReplyInfo
   unsigned short sucessNumber;
   unsigned short executionNumber;
   unsigned short ownTargetNumber;
+  octet startNode;
+  octet targetNode;
 
   unsigned short number1;
-  unsigned short resultNumer1;
+  octet resultNumer1[2];
 
   unsigned short number2;
-  unsigned short resultNumer2;
+  octet resultNumer2[2];
 
   unsigned short number3;
-  unsigned short resultNumer3;
+  octet resultNumer3[2];
 
   unsigned short number4;
-  unsigned short resultNumer4;
+  octet resultNumer4[2];
 
   unsigned short number5;
-  unsigned short resultNumer5;
+  octet resultNumer5[2];
 
   unsigned short number6;
-  unsigned short resultNumer6;
+  octet resultNumer6[2];
 
   unsigned short number7;
-  unsigned short resultNumer7;
+  octet resultNumer7[2];
 
   unsigned short number8;
-  unsigned short resultNumer8;
+  octet resultNumer8[2];
 
   unsigned short number9;
-  unsigned short resultNumer9;
+  octet resultNumer9[2];
 
   unsigned short number10;
-  unsigned short resultNumer10; 
+  octet resultNumer10[2]; 
 };

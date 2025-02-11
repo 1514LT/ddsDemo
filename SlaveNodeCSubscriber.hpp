@@ -13,12 +13,14 @@
 #include <fastdds/dds/subscriber/Subscriber.hpp>
 #include <fastdds/dds/topic/TypeSupport.hpp>
 
+#include "SlaveNodeCPublisher.hpp"
 using namespace eprosima::fastdds::dds;
 
 class SlaveNodeCSubListener :public DataReaderListener
 {
 private:
   std::atomic_int m_samples;
+  std::shared_ptr<SlaveNodeCPublisher> m_publisher;
 public:
   SlaveNodeCSubListener();
   ~SlaveNodeCSubListener();
@@ -26,6 +28,7 @@ public:
   void on_subscription_matched(DataReader * reader, const SubscriptionMatchedStatus & info) override;
 
   void on_data_available(DataReader * reader) override;
+  void printTarget(const Target& target);
 };
 
 class SlaveNodeCSubscriber

@@ -14,13 +14,14 @@
 #include <fastdds/dds/subscriber/Subscriber.hpp>
 #include <fastdds/dds/topic/TypeSupport.hpp>
 
+#include "SlaveNodeBPublisher.hpp"
 using namespace eprosima::fastdds::dds;
 
 class SlaveNodeBSubListener : public DataReaderListener
 {
 private:
   std::atomic_int m_samples;
-
+  std::shared_ptr<SlaveNodeBPublisher> m_publisher;
 public:
   SlaveNodeBSubListener();
   ~SlaveNodeBSubListener();
@@ -28,6 +29,8 @@ public:
   void on_subscription_matched(DataReader * reader, const SubscriptionMatchedStatus & info) override;
 
   void on_data_available(DataReader * reader) override;
+  void printTarget(const Target& target);
+  std::string showResult(std::array<uint8_t, 2> arry);
 };
 
 class SlaveNodeBSubscriber
@@ -40,6 +43,7 @@ private:
   std::vector<TypeSupport> m_type;
 
   SlaveNodeBSubListener m_guidanceInfoListener;
+  SlaveNodeBSubListener m_replyinfoListener;
 public:
   SlaveNodeBSubscriber();
   ~SlaveNodeBSubscriber();

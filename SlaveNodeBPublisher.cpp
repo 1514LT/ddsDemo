@@ -71,7 +71,7 @@ bool SlaveNodeBPublisher::initPubType(const std::string & topicName, const std::
 bool SlaveNodeBPublisher::init()
 {
   DomainParticipantQos paritcipantQos;
-  paritcipantQos.name("mainnode_publisher");
+  paritcipantQos.name("slavenodeb_publisher");
   m_participant = DomainParticipantFactory::get_instance()->create_participant(0,paritcipantQos);
 
   if(!m_participant)
@@ -85,12 +85,13 @@ bool SlaveNodeBPublisher::init()
       return false;
   }
 
-  m_typeVec.reserve(6);
-  m_writers.reserve(6);
+  m_typeVec.reserve(2);
+  m_writers.reserve(2);
   return 
-  initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyInfoListener);
+  initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyInfoListener) &&
+  initPubType("GuidanceInfoTopic","GuidanceInfo",new GuidanceInfoPubSubType,&m_guidanceInfoListener);
 }
-bool SlaveNodeBPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id = 0)
+bool SlaveNodeBPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
 {
   if(!(vt_topicName.size() == vt_typeName.size() && vt_typeName.size() == vt_dataType.size() && vt_dataType.size() == vt_listener.size()))
   {
@@ -127,4 +128,14 @@ bool SlaveNodeBPublisher::replayInfoMatched()
 bool SlaveNodeBPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 {
   return !m_writers.empty() && m_writers[0].second->write(&replyInfo);
+}
+
+bool SlaveNodeBPublisher::guidanceInfoMatched()
+{
+  return m_guidanceInfoListener.m_matched > 0;
+}
+
+bool SlaveNodeBPublisher::publishGuidanceInfo(GuidanceInfo &guidanceInfo)
+{
+  return m_writers.size() > 1 && m_writers[1].second->write(&guidanceInfo);
 }

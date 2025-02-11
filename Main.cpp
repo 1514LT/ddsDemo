@@ -26,7 +26,7 @@ static void printHelp()
 }
 int main(int argc, char const *argv[])
 {
-  int timeinterval = 1000;
+    int timeinterval = 1000 * 5;
     int mainNode = 0;
     if(argc < 2)
     {
@@ -78,14 +78,70 @@ int main(int argc, char const *argv[])
     if(mainNode == 1)
     {
       // nodeA
+      MainNodeAPublisher publisher;
+      publisher.init();
+      MainNodeASubscriber subscriber;
+      subscriber.init();
+      while (true)
+      {
+        if(publisher.GuidanceInfoMatched())
+        {
+          GuidanceInfo guidanceInfo;
+          guidanceInfo.beatCount(11111);
+          guidanceInfo.targetCount(5);
+          guidanceInfo.startNode(0x00);
+          guidanceInfo.targetNode(0x02);
+          guidanceInfo.targetType(0x55);
+          Target First,Second,Third,Fourth,Fifth;
+          First.targetNumber(11111);
+          std::array<u_int8_t,6> timeNumber = {0x00,0x5f,0x7a,0x0d,0x1b,0xfc};
+          First.time(timeNumber);
+          First.longitude(-9000000);
+          First.latitude(-18000000);
+          First.elevation(0);
+          First.Priority(0);
+          First.confidenceDegree(0);
+          First.informationType(0x0001);
+          First.positionAccuracy(20);
+          First.imagingMode(0);
+          First.desiredTrack(0);
+          // try
+          First.shipSpeed(0.1);
+          std::array<u_int8_t,5> back;
+          back.fill(0x00);
+          First.back(back);
+
+          guidanceInfo.First(First);
+          guidanceInfo.Second(First);
+          guidanceInfo.Third(First);
+          guidanceInfo.Fourth(First);
+          guidanceInfo.Fifth(First);
+          publisher.PublishGuidanceInfo(guidanceInfo);
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
+      }
+      
     }
     else if (mainNode == 2)
     {
       // node B
+      SlaveNodeBSubscriber subscriber;
+      subscriber.init();
+      while (true)
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
+      }
+      
     }
     else if(mainNode == 3)
     {
       // node C
+      SlaveNodeCSubscriber subscriber;
+      subscriber.init();
+      while (true)
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
+      }
     }
   return 0;
 }

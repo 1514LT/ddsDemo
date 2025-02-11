@@ -24,6 +24,16 @@ void MainNodeASubListener::on_subscription_matched(DataReader * reader, const Su
   }
 }
 
+std::string MainNodeASubListener::showResult(std::array<uint8_t, 2> arry)
+{
+  std::stringstream iss;
+  for(auto value: arry)
+  {
+    iss << std::to_string((int)value) << "";
+  }
+  return iss.str();
+}
+
 void MainNodeASubListener::on_data_available(DataReader * reader)
 {
   SampleInfo info;
@@ -35,6 +45,26 @@ void MainNodeASubListener::on_data_available(DataReader * reader)
     {
       if (info.valid_data)
       {
+        if((int)msg.startNode() != 1)
+          return;
+        std::cout << "Start Node: " << (int)msg.startNode() << std::endl;
+        std::cout << "Target Node " << (int)msg.targetNode() << std::endl;
+        std::cout << "Target Number: " << msg.targetNumber() << std::endl;
+        std::cout << "Handle Number: " << msg.handleNumber() << std::endl;
+        std::cout << "Success Number: " << msg.sucessNumber() << std::endl;
+        std::cout << "Execution Number: " << msg.executionNumber() << std::endl;
+        std::cout << "Own Target Number: " << msg.ownTargetNumber() << std::endl;
+
+        std::cout << "\nNumber 1: " << msg.number1() << ", Result Number 1: " << showResult(msg.resultNumer1()) << std::endl;
+        std::cout << "Number 2: " << msg.number2() << ", Result Number 2: " << showResult(msg.resultNumer2()) << std::endl;
+        std::cout << "Number 3: " << msg.number3() << ", Result Number 3: " << showResult(msg.resultNumer3()) << std::endl;
+        std::cout << "Number 4: " << msg.number4() << ", Result Number 4: " << showResult(msg.resultNumer4()) << std::endl;
+        std::cout << "Number 5: " << msg.number5() << ", Result Number 5: " << showResult(msg.resultNumer5()) << std::endl;
+        std::cout << "Number 6: " << msg.number6() << ", Result Number 6: " << showResult(msg.resultNumer6()) << std::endl;
+        std::cout << "Number 7: " << msg.number7() << ", Result Number 7: " << showResult(msg.resultNumer7()) << std::endl;
+        std::cout << "Number 8: " << msg.number8() << ", Result Number 8: " << showResult(msg.resultNumer8()) << std::endl;
+        std::cout << "Number 9: " << msg.number9() << ", Result Number 9: " << showResult(msg.resultNumer9()) << std::endl;
+        std::cout << "Number 10: " << msg.number10() << ", Result Number 10: " << showResult(msg.resultNumer10()) << std::endl;
       }
     }
   }

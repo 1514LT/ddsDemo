@@ -559,7 +559,8 @@ GuidanceInfo::GuidanceInfo(
 {
     m_beatCount = x.m_beatCount;
     m_targetCount = x.m_targetCount;
-    m_node = x.m_node;
+    m_targetNode = x.m_targetNode;
+    m_startNode = x.m_startNode;
     m_targetType = x.m_targetType;
     m_First = x.m_First;
     m_Second = x.m_Second;
@@ -573,7 +574,8 @@ GuidanceInfo::GuidanceInfo(
 {
     m_beatCount = x.m_beatCount;
     m_targetCount = x.m_targetCount;
-    m_node = x.m_node;
+    m_targetNode = x.m_targetNode;
+    m_startNode = x.m_startNode;
     m_targetType = x.m_targetType;
     m_First = std::move(x.m_First);
     m_Second = std::move(x.m_Second);
@@ -588,7 +590,8 @@ GuidanceInfo& GuidanceInfo::operator =(
 
     m_beatCount = x.m_beatCount;
     m_targetCount = x.m_targetCount;
-    m_node = x.m_node;
+    m_targetNode = x.m_targetNode;
+    m_startNode = x.m_startNode;
     m_targetType = x.m_targetType;
     m_First = x.m_First;
     m_Second = x.m_Second;
@@ -604,7 +607,8 @@ GuidanceInfo& GuidanceInfo::operator =(
 
     m_beatCount = x.m_beatCount;
     m_targetCount = x.m_targetCount;
-    m_node = x.m_node;
+    m_targetNode = x.m_targetNode;
+    m_startNode = x.m_startNode;
     m_targetType = x.m_targetType;
     m_First = std::move(x.m_First);
     m_Second = std::move(x.m_Second);
@@ -619,7 +623,8 @@ bool GuidanceInfo::operator ==(
 {
     return (m_beatCount == x.m_beatCount &&
            m_targetCount == x.m_targetCount &&
-           m_node == x.m_node &&
+           m_targetNode == x.m_targetNode &&
+           m_startNode == x.m_startNode &&
            m_targetType == x.m_targetType &&
            m_First == x.m_First &&
            m_Second == x.m_Second &&
@@ -693,31 +698,60 @@ uint8_t& GuidanceInfo::targetCount()
 
 
 /*!
- * @brief This function sets a value in member node
- * @param _node New value for member node
+ * @brief This function sets a value in member targetNode
+ * @param _targetNode New value for member targetNode
  */
-void GuidanceInfo::node(
-        uint16_t _node)
+void GuidanceInfo::targetNode(
+        uint8_t _targetNode)
 {
-    m_node = _node;
+    m_targetNode = _targetNode;
 }
 
 /*!
- * @brief This function returns the value of member node
- * @return Value of member node
+ * @brief This function returns the value of member targetNode
+ * @return Value of member targetNode
  */
-uint16_t GuidanceInfo::node() const
+uint8_t GuidanceInfo::targetNode() const
 {
-    return m_node;
+    return m_targetNode;
 }
 
 /*!
- * @brief This function returns a reference to member node
- * @return Reference to member node
+ * @brief This function returns a reference to member targetNode
+ * @return Reference to member targetNode
  */
-uint16_t& GuidanceInfo::node()
+uint8_t& GuidanceInfo::targetNode()
 {
-    return m_node;
+    return m_targetNode;
+}
+
+
+/*!
+ * @brief This function sets a value in member startNode
+ * @param _startNode New value for member startNode
+ */
+void GuidanceInfo::startNode(
+        uint8_t _startNode)
+{
+    m_startNode = _startNode;
+}
+
+/*!
+ * @brief This function returns the value of member startNode
+ * @return Value of member startNode
+ */
+uint8_t GuidanceInfo::startNode() const
+{
+    return m_startNode;
+}
+
+/*!
+ * @brief This function returns a reference to member startNode
+ * @return Reference to member startNode
+ */
+uint8_t& GuidanceInfo::startNode()
+{
+    return m_startNode;
 }
 
 
@@ -963,6 +997,8 @@ ReplyInfo::ReplyInfo(
     m_sucessNumber = x.m_sucessNumber;
     m_executionNumber = x.m_executionNumber;
     m_ownTargetNumber = x.m_ownTargetNumber;
+    m_startNode = x.m_startNode;
+    m_targetNode = x.m_targetNode;
     m_number1 = x.m_number1;
     m_resultNumer1 = x.m_resultNumer1;
     m_number2 = x.m_number2;
@@ -993,26 +1029,28 @@ ReplyInfo::ReplyInfo(
     m_sucessNumber = x.m_sucessNumber;
     m_executionNumber = x.m_executionNumber;
     m_ownTargetNumber = x.m_ownTargetNumber;
+    m_startNode = x.m_startNode;
+    m_targetNode = x.m_targetNode;
     m_number1 = x.m_number1;
-    m_resultNumer1 = x.m_resultNumer1;
+    m_resultNumer1 = std::move(x.m_resultNumer1);
     m_number2 = x.m_number2;
-    m_resultNumer2 = x.m_resultNumer2;
+    m_resultNumer2 = std::move(x.m_resultNumer2);
     m_number3 = x.m_number3;
-    m_resultNumer3 = x.m_resultNumer3;
+    m_resultNumer3 = std::move(x.m_resultNumer3);
     m_number4 = x.m_number4;
-    m_resultNumer4 = x.m_resultNumer4;
+    m_resultNumer4 = std::move(x.m_resultNumer4);
     m_number5 = x.m_number5;
-    m_resultNumer5 = x.m_resultNumer5;
+    m_resultNumer5 = std::move(x.m_resultNumer5);
     m_number6 = x.m_number6;
-    m_resultNumer6 = x.m_resultNumer6;
+    m_resultNumer6 = std::move(x.m_resultNumer6);
     m_number7 = x.m_number7;
-    m_resultNumer7 = x.m_resultNumer7;
+    m_resultNumer7 = std::move(x.m_resultNumer7);
     m_number8 = x.m_number8;
-    m_resultNumer8 = x.m_resultNumer8;
+    m_resultNumer8 = std::move(x.m_resultNumer8);
     m_number9 = x.m_number9;
-    m_resultNumer9 = x.m_resultNumer9;
+    m_resultNumer9 = std::move(x.m_resultNumer9);
     m_number10 = x.m_number10;
-    m_resultNumer10 = x.m_resultNumer10;
+    m_resultNumer10 = std::move(x.m_resultNumer10);
 }
 
 ReplyInfo& ReplyInfo::operator =(
@@ -1024,6 +1062,8 @@ ReplyInfo& ReplyInfo::operator =(
     m_sucessNumber = x.m_sucessNumber;
     m_executionNumber = x.m_executionNumber;
     m_ownTargetNumber = x.m_ownTargetNumber;
+    m_startNode = x.m_startNode;
+    m_targetNode = x.m_targetNode;
     m_number1 = x.m_number1;
     m_resultNumer1 = x.m_resultNumer1;
     m_number2 = x.m_number2;
@@ -1056,26 +1096,28 @@ ReplyInfo& ReplyInfo::operator =(
     m_sucessNumber = x.m_sucessNumber;
     m_executionNumber = x.m_executionNumber;
     m_ownTargetNumber = x.m_ownTargetNumber;
+    m_startNode = x.m_startNode;
+    m_targetNode = x.m_targetNode;
     m_number1 = x.m_number1;
-    m_resultNumer1 = x.m_resultNumer1;
+    m_resultNumer1 = std::move(x.m_resultNumer1);
     m_number2 = x.m_number2;
-    m_resultNumer2 = x.m_resultNumer2;
+    m_resultNumer2 = std::move(x.m_resultNumer2);
     m_number3 = x.m_number3;
-    m_resultNumer3 = x.m_resultNumer3;
+    m_resultNumer3 = std::move(x.m_resultNumer3);
     m_number4 = x.m_number4;
-    m_resultNumer4 = x.m_resultNumer4;
+    m_resultNumer4 = std::move(x.m_resultNumer4);
     m_number5 = x.m_number5;
-    m_resultNumer5 = x.m_resultNumer5;
+    m_resultNumer5 = std::move(x.m_resultNumer5);
     m_number6 = x.m_number6;
-    m_resultNumer6 = x.m_resultNumer6;
+    m_resultNumer6 = std::move(x.m_resultNumer6);
     m_number7 = x.m_number7;
-    m_resultNumer7 = x.m_resultNumer7;
+    m_resultNumer7 = std::move(x.m_resultNumer7);
     m_number8 = x.m_number8;
-    m_resultNumer8 = x.m_resultNumer8;
+    m_resultNumer8 = std::move(x.m_resultNumer8);
     m_number9 = x.m_number9;
-    m_resultNumer9 = x.m_resultNumer9;
+    m_resultNumer9 = std::move(x.m_resultNumer9);
     m_number10 = x.m_number10;
-    m_resultNumer10 = x.m_resultNumer10;
+    m_resultNumer10 = std::move(x.m_resultNumer10);
     return *this;
 }
 
@@ -1087,6 +1129,8 @@ bool ReplyInfo::operator ==(
            m_sucessNumber == x.m_sucessNumber &&
            m_executionNumber == x.m_executionNumber &&
            m_ownTargetNumber == x.m_ownTargetNumber &&
+           m_startNode == x.m_startNode &&
+           m_targetNode == x.m_targetNode &&
            m_number1 == x.m_number1 &&
            m_resultNumer1 == x.m_resultNumer1 &&
            m_number2 == x.m_number2 &&
@@ -1261,6 +1305,64 @@ uint16_t& ReplyInfo::ownTargetNumber()
 
 
 /*!
+ * @brief This function sets a value in member startNode
+ * @param _startNode New value for member startNode
+ */
+void ReplyInfo::startNode(
+        uint8_t _startNode)
+{
+    m_startNode = _startNode;
+}
+
+/*!
+ * @brief This function returns the value of member startNode
+ * @return Value of member startNode
+ */
+uint8_t ReplyInfo::startNode() const
+{
+    return m_startNode;
+}
+
+/*!
+ * @brief This function returns a reference to member startNode
+ * @return Reference to member startNode
+ */
+uint8_t& ReplyInfo::startNode()
+{
+    return m_startNode;
+}
+
+
+/*!
+ * @brief This function sets a value in member targetNode
+ * @param _targetNode New value for member targetNode
+ */
+void ReplyInfo::targetNode(
+        uint8_t _targetNode)
+{
+    m_targetNode = _targetNode;
+}
+
+/*!
+ * @brief This function returns the value of member targetNode
+ * @return Value of member targetNode
+ */
+uint8_t ReplyInfo::targetNode() const
+{
+    return m_targetNode;
+}
+
+/*!
+ * @brief This function returns a reference to member targetNode
+ * @return Reference to member targetNode
+ */
+uint8_t& ReplyInfo::targetNode()
+{
+    return m_targetNode;
+}
+
+
+/*!
  * @brief This function sets a value in member number1
  * @param _number1 New value for member number1
  */
@@ -1290,20 +1392,30 @@ uint16_t& ReplyInfo::number1()
 
 
 /*!
- * @brief This function sets a value in member resultNumer1
- * @param _resultNumer1 New value for member resultNumer1
+ * @brief This function copies the value in member resultNumer1
+ * @param _resultNumer1 New value to be copied in member resultNumer1
  */
 void ReplyInfo::resultNumer1(
-        uint16_t _resultNumer1)
+        const std::array<uint8_t, 2>& _resultNumer1)
 {
     m_resultNumer1 = _resultNumer1;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer1
- * @return Value of member resultNumer1
+ * @brief This function moves the value in member resultNumer1
+ * @param _resultNumer1 New value to be moved in member resultNumer1
  */
-uint16_t ReplyInfo::resultNumer1() const
+void ReplyInfo::resultNumer1(
+        std::array<uint8_t, 2>&& _resultNumer1)
+{
+    m_resultNumer1 = std::move(_resultNumer1);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer1
+ * @return Constant reference to member resultNumer1
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer1() const
 {
     return m_resultNumer1;
 }
@@ -1312,7 +1424,7 @@ uint16_t ReplyInfo::resultNumer1() const
  * @brief This function returns a reference to member resultNumer1
  * @return Reference to member resultNumer1
  */
-uint16_t& ReplyInfo::resultNumer1()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer1()
 {
     return m_resultNumer1;
 }
@@ -1348,20 +1460,30 @@ uint16_t& ReplyInfo::number2()
 
 
 /*!
- * @brief This function sets a value in member resultNumer2
- * @param _resultNumer2 New value for member resultNumer2
+ * @brief This function copies the value in member resultNumer2
+ * @param _resultNumer2 New value to be copied in member resultNumer2
  */
 void ReplyInfo::resultNumer2(
-        uint16_t _resultNumer2)
+        const std::array<uint8_t, 2>& _resultNumer2)
 {
     m_resultNumer2 = _resultNumer2;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer2
- * @return Value of member resultNumer2
+ * @brief This function moves the value in member resultNumer2
+ * @param _resultNumer2 New value to be moved in member resultNumer2
  */
-uint16_t ReplyInfo::resultNumer2() const
+void ReplyInfo::resultNumer2(
+        std::array<uint8_t, 2>&& _resultNumer2)
+{
+    m_resultNumer2 = std::move(_resultNumer2);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer2
+ * @return Constant reference to member resultNumer2
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer2() const
 {
     return m_resultNumer2;
 }
@@ -1370,7 +1492,7 @@ uint16_t ReplyInfo::resultNumer2() const
  * @brief This function returns a reference to member resultNumer2
  * @return Reference to member resultNumer2
  */
-uint16_t& ReplyInfo::resultNumer2()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer2()
 {
     return m_resultNumer2;
 }
@@ -1406,20 +1528,30 @@ uint16_t& ReplyInfo::number3()
 
 
 /*!
- * @brief This function sets a value in member resultNumer3
- * @param _resultNumer3 New value for member resultNumer3
+ * @brief This function copies the value in member resultNumer3
+ * @param _resultNumer3 New value to be copied in member resultNumer3
  */
 void ReplyInfo::resultNumer3(
-        uint16_t _resultNumer3)
+        const std::array<uint8_t, 2>& _resultNumer3)
 {
     m_resultNumer3 = _resultNumer3;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer3
- * @return Value of member resultNumer3
+ * @brief This function moves the value in member resultNumer3
+ * @param _resultNumer3 New value to be moved in member resultNumer3
  */
-uint16_t ReplyInfo::resultNumer3() const
+void ReplyInfo::resultNumer3(
+        std::array<uint8_t, 2>&& _resultNumer3)
+{
+    m_resultNumer3 = std::move(_resultNumer3);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer3
+ * @return Constant reference to member resultNumer3
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer3() const
 {
     return m_resultNumer3;
 }
@@ -1428,7 +1560,7 @@ uint16_t ReplyInfo::resultNumer3() const
  * @brief This function returns a reference to member resultNumer3
  * @return Reference to member resultNumer3
  */
-uint16_t& ReplyInfo::resultNumer3()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer3()
 {
     return m_resultNumer3;
 }
@@ -1464,20 +1596,30 @@ uint16_t& ReplyInfo::number4()
 
 
 /*!
- * @brief This function sets a value in member resultNumer4
- * @param _resultNumer4 New value for member resultNumer4
+ * @brief This function copies the value in member resultNumer4
+ * @param _resultNumer4 New value to be copied in member resultNumer4
  */
 void ReplyInfo::resultNumer4(
-        uint16_t _resultNumer4)
+        const std::array<uint8_t, 2>& _resultNumer4)
 {
     m_resultNumer4 = _resultNumer4;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer4
- * @return Value of member resultNumer4
+ * @brief This function moves the value in member resultNumer4
+ * @param _resultNumer4 New value to be moved in member resultNumer4
  */
-uint16_t ReplyInfo::resultNumer4() const
+void ReplyInfo::resultNumer4(
+        std::array<uint8_t, 2>&& _resultNumer4)
+{
+    m_resultNumer4 = std::move(_resultNumer4);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer4
+ * @return Constant reference to member resultNumer4
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer4() const
 {
     return m_resultNumer4;
 }
@@ -1486,7 +1628,7 @@ uint16_t ReplyInfo::resultNumer4() const
  * @brief This function returns a reference to member resultNumer4
  * @return Reference to member resultNumer4
  */
-uint16_t& ReplyInfo::resultNumer4()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer4()
 {
     return m_resultNumer4;
 }
@@ -1522,20 +1664,30 @@ uint16_t& ReplyInfo::number5()
 
 
 /*!
- * @brief This function sets a value in member resultNumer5
- * @param _resultNumer5 New value for member resultNumer5
+ * @brief This function copies the value in member resultNumer5
+ * @param _resultNumer5 New value to be copied in member resultNumer5
  */
 void ReplyInfo::resultNumer5(
-        uint16_t _resultNumer5)
+        const std::array<uint8_t, 2>& _resultNumer5)
 {
     m_resultNumer5 = _resultNumer5;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer5
- * @return Value of member resultNumer5
+ * @brief This function moves the value in member resultNumer5
+ * @param _resultNumer5 New value to be moved in member resultNumer5
  */
-uint16_t ReplyInfo::resultNumer5() const
+void ReplyInfo::resultNumer5(
+        std::array<uint8_t, 2>&& _resultNumer5)
+{
+    m_resultNumer5 = std::move(_resultNumer5);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer5
+ * @return Constant reference to member resultNumer5
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer5() const
 {
     return m_resultNumer5;
 }
@@ -1544,7 +1696,7 @@ uint16_t ReplyInfo::resultNumer5() const
  * @brief This function returns a reference to member resultNumer5
  * @return Reference to member resultNumer5
  */
-uint16_t& ReplyInfo::resultNumer5()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer5()
 {
     return m_resultNumer5;
 }
@@ -1580,20 +1732,30 @@ uint16_t& ReplyInfo::number6()
 
 
 /*!
- * @brief This function sets a value in member resultNumer6
- * @param _resultNumer6 New value for member resultNumer6
+ * @brief This function copies the value in member resultNumer6
+ * @param _resultNumer6 New value to be copied in member resultNumer6
  */
 void ReplyInfo::resultNumer6(
-        uint16_t _resultNumer6)
+        const std::array<uint8_t, 2>& _resultNumer6)
 {
     m_resultNumer6 = _resultNumer6;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer6
- * @return Value of member resultNumer6
+ * @brief This function moves the value in member resultNumer6
+ * @param _resultNumer6 New value to be moved in member resultNumer6
  */
-uint16_t ReplyInfo::resultNumer6() const
+void ReplyInfo::resultNumer6(
+        std::array<uint8_t, 2>&& _resultNumer6)
+{
+    m_resultNumer6 = std::move(_resultNumer6);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer6
+ * @return Constant reference to member resultNumer6
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer6() const
 {
     return m_resultNumer6;
 }
@@ -1602,7 +1764,7 @@ uint16_t ReplyInfo::resultNumer6() const
  * @brief This function returns a reference to member resultNumer6
  * @return Reference to member resultNumer6
  */
-uint16_t& ReplyInfo::resultNumer6()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer6()
 {
     return m_resultNumer6;
 }
@@ -1638,20 +1800,30 @@ uint16_t& ReplyInfo::number7()
 
 
 /*!
- * @brief This function sets a value in member resultNumer7
- * @param _resultNumer7 New value for member resultNumer7
+ * @brief This function copies the value in member resultNumer7
+ * @param _resultNumer7 New value to be copied in member resultNumer7
  */
 void ReplyInfo::resultNumer7(
-        uint16_t _resultNumer7)
+        const std::array<uint8_t, 2>& _resultNumer7)
 {
     m_resultNumer7 = _resultNumer7;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer7
- * @return Value of member resultNumer7
+ * @brief This function moves the value in member resultNumer7
+ * @param _resultNumer7 New value to be moved in member resultNumer7
  */
-uint16_t ReplyInfo::resultNumer7() const
+void ReplyInfo::resultNumer7(
+        std::array<uint8_t, 2>&& _resultNumer7)
+{
+    m_resultNumer7 = std::move(_resultNumer7);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer7
+ * @return Constant reference to member resultNumer7
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer7() const
 {
     return m_resultNumer7;
 }
@@ -1660,7 +1832,7 @@ uint16_t ReplyInfo::resultNumer7() const
  * @brief This function returns a reference to member resultNumer7
  * @return Reference to member resultNumer7
  */
-uint16_t& ReplyInfo::resultNumer7()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer7()
 {
     return m_resultNumer7;
 }
@@ -1696,20 +1868,30 @@ uint16_t& ReplyInfo::number8()
 
 
 /*!
- * @brief This function sets a value in member resultNumer8
- * @param _resultNumer8 New value for member resultNumer8
+ * @brief This function copies the value in member resultNumer8
+ * @param _resultNumer8 New value to be copied in member resultNumer8
  */
 void ReplyInfo::resultNumer8(
-        uint16_t _resultNumer8)
+        const std::array<uint8_t, 2>& _resultNumer8)
 {
     m_resultNumer8 = _resultNumer8;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer8
- * @return Value of member resultNumer8
+ * @brief This function moves the value in member resultNumer8
+ * @param _resultNumer8 New value to be moved in member resultNumer8
  */
-uint16_t ReplyInfo::resultNumer8() const
+void ReplyInfo::resultNumer8(
+        std::array<uint8_t, 2>&& _resultNumer8)
+{
+    m_resultNumer8 = std::move(_resultNumer8);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer8
+ * @return Constant reference to member resultNumer8
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer8() const
 {
     return m_resultNumer8;
 }
@@ -1718,7 +1900,7 @@ uint16_t ReplyInfo::resultNumer8() const
  * @brief This function returns a reference to member resultNumer8
  * @return Reference to member resultNumer8
  */
-uint16_t& ReplyInfo::resultNumer8()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer8()
 {
     return m_resultNumer8;
 }
@@ -1754,20 +1936,30 @@ uint16_t& ReplyInfo::number9()
 
 
 /*!
- * @brief This function sets a value in member resultNumer9
- * @param _resultNumer9 New value for member resultNumer9
+ * @brief This function copies the value in member resultNumer9
+ * @param _resultNumer9 New value to be copied in member resultNumer9
  */
 void ReplyInfo::resultNumer9(
-        uint16_t _resultNumer9)
+        const std::array<uint8_t, 2>& _resultNumer9)
 {
     m_resultNumer9 = _resultNumer9;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer9
- * @return Value of member resultNumer9
+ * @brief This function moves the value in member resultNumer9
+ * @param _resultNumer9 New value to be moved in member resultNumer9
  */
-uint16_t ReplyInfo::resultNumer9() const
+void ReplyInfo::resultNumer9(
+        std::array<uint8_t, 2>&& _resultNumer9)
+{
+    m_resultNumer9 = std::move(_resultNumer9);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer9
+ * @return Constant reference to member resultNumer9
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer9() const
 {
     return m_resultNumer9;
 }
@@ -1776,7 +1968,7 @@ uint16_t ReplyInfo::resultNumer9() const
  * @brief This function returns a reference to member resultNumer9
  * @return Reference to member resultNumer9
  */
-uint16_t& ReplyInfo::resultNumer9()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer9()
 {
     return m_resultNumer9;
 }
@@ -1812,20 +2004,30 @@ uint16_t& ReplyInfo::number10()
 
 
 /*!
- * @brief This function sets a value in member resultNumer10
- * @param _resultNumer10 New value for member resultNumer10
+ * @brief This function copies the value in member resultNumer10
+ * @param _resultNumer10 New value to be copied in member resultNumer10
  */
 void ReplyInfo::resultNumer10(
-        uint16_t _resultNumer10)
+        const std::array<uint8_t, 2>& _resultNumer10)
 {
     m_resultNumer10 = _resultNumer10;
 }
 
 /*!
- * @brief This function returns the value of member resultNumer10
- * @return Value of member resultNumer10
+ * @brief This function moves the value in member resultNumer10
+ * @param _resultNumer10 New value to be moved in member resultNumer10
  */
-uint16_t ReplyInfo::resultNumer10() const
+void ReplyInfo::resultNumer10(
+        std::array<uint8_t, 2>&& _resultNumer10)
+{
+    m_resultNumer10 = std::move(_resultNumer10);
+}
+
+/*!
+ * @brief This function returns a constant reference to member resultNumer10
+ * @return Constant reference to member resultNumer10
+ */
+const std::array<uint8_t, 2>& ReplyInfo::resultNumer10() const
 {
     return m_resultNumer10;
 }
@@ -1834,7 +2036,7 @@ uint16_t ReplyInfo::resultNumer10() const
  * @brief This function returns a reference to member resultNumer10
  * @return Reference to member resultNumer10
  */
-uint16_t& ReplyInfo::resultNumer10()
+std::array<uint8_t, 2>& ReplyInfo::resultNumer10()
 {
     return m_resultNumer10;
 }

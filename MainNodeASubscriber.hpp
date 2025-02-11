@@ -28,6 +28,7 @@ public:
   void on_subscription_matched(DataReader * reader, const SubscriptionMatchedStatus & info) override;
 
   void on_data_available(DataReader * reader) override;
+  std::string showResult(std::array<uint8_t, 2> arry);
 };
 
 

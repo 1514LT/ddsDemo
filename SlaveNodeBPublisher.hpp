@@ -31,6 +31,7 @@ class SlaveNodeBPublisher
 {
 private:
   SlaveNodeBPubListener m_replyInfoListener;
+  SlaveNodeBPubListener m_guidanceInfoListener;
 
   DomainParticipant* m_participant;
   Publisher* m_publisher;
@@ -48,6 +49,9 @@ public:
 
   bool replayInfoMatched();
   bool publishReplyInfo(ReplyInfo &replyInfo);
+
+  bool guidanceInfoMatched();
+  bool publishGuidanceInfo(GuidanceInfo &guidanceInfo);
 };
 
 

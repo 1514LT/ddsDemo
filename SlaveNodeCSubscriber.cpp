@@ -3,6 +3,8 @@
 SlaveNodeCSubListener::SlaveNodeCSubListener()
 :m_samples(0)
 {
+  m_publisher = std::make_shared<SlaveNodeCPublisher>();
+  m_publisher->init();
 }
 
 SlaveNodeCSubListener::~SlaveNodeCSubListener()
@@ -36,12 +38,86 @@ void SlaveNodeCSubListener::on_data_available(DataReader * reader)
     {
       if (info.valid_data)
       {
-        // printf("number:%d,seconds:%u,milliseconds:%u\n",(int)msg.number(),msg.seconds(),msg.milliseconds());
+        if((int)msg.startNode() != 1)
+          return;
+        printf("recv GuidanceInfoTopic info\n");
+        std::cout << "本节拍总目标数" << (short)msg.beatCount() << std::endl;
+        std::cout << "本包目标数" << (int)msg.targetCount() << std::endl;
+        std::cout << "起始节点" << (int)msg.startNode() << std::endl;
+        std::cout << "目标节点" << (int)msg.targetNode() << std::endl;
+        std::cout << "目标类型" << (int)msg.targetType() << std::endl;
+
+        std::cout << "\nFirst Target:" << std::endl;
+        printTarget(msg.First());
+    
+        std::cout << "\nSecond Target:" << std::endl;
+        printTarget(msg.Second());
+    
+        std::cout << "\nThird Target:" << std::endl;
+        printTarget(msg.Third());
+    
+        std::cout << "\nFourth Target:" << std::endl;
+        printTarget(msg.Fourth());
+    
+        std::cout << "\nFifth Target:" << std::endl;
+        printTarget(msg.Fifth());
+        // send nodeA
+        if(m_publisher->replayInfoMatched())
+        {
+          ReplyInfo replyInfo;
+          replyInfo.startNode() = 0x02;
+          replyInfo.targetNode() = 0x01;
+          replyInfo.targetNumber() = 100;
+          replyInfo.handleNumber() = 200;
+          replyInfo.sucessNumber() = 150;
+          replyInfo.executionNumber() = 300;
+          replyInfo.ownTargetNumber() = 400;
+      
+          replyInfo.number1() = 10; replyInfo.resultNumer1({0xAA,0xBB});
+          replyInfo.number2() = 20; replyInfo.resultNumer2({0xAA,0xBB});
+          replyInfo.number3() = 30; replyInfo.resultNumer3({0xAA,0xBB});
+          replyInfo.number4() = 40; replyInfo.resultNumer4({0xAA,0xBB});
+          replyInfo.number5() = 50; replyInfo.resultNumer5({0xAA,0xBB});
+          replyInfo.number6() = 60; replyInfo.resultNumer6({0xAA,0xBB});
+          replyInfo.number7() = 70; replyInfo.resultNumer7({0xAA,0xBB});
+          replyInfo.number8() = 80; replyInfo.resultNumer8({0xAA,0xBB});
+          replyInfo.number9() = 90; replyInfo.resultNumer9({0xAA,0xBB});
+          replyInfo.number10() = 100; replyInfo.resultNumer10({0xAA,0xBB});
+          m_publisher->publishReplyInfo(replyInfo);
+        }
       }
     }
   }
 }
 
+void SlaveNodeCSubListener::printTarget(const Target& target)
+{
+  std::cout << "Target Number: " << target.targetNumber() << std::endl;
+  std::cout << "Time: ";
+  for(auto time:target.time())
+  {
+    std::cout << (int)time << " ";
+  }
+  std::cout << std::endl;
+
+  std::cout << "Longitude: " << target.longitude() << std::endl;
+  std::cout << "Latitude: " << target.latitude() << std::endl;
+  std::cout << "Elevation: " << target.elevation() << std::endl;
+  std::cout << "Priority: " << (int)target.Priority() << std::endl;
+  std::cout << "Confidence Degree: " << (int)target.confidenceDegree() << std::endl;
+  std::cout << "Information Type: " << (int)target.informationType() << std::endl;
+  std::cout << "Position Accuracy: " << (int)target.positionAccuracy() << std::endl;
+  std::cout << "Imaging Mode: " << (int)target.imagingMode() << std::endl;
+  std::cout << "Desired Track: " << target.desiredTrack() << std::endl;
+  std::cout << "Ship Speed: " << target.shipSpeed() << std::endl;
+  
+  std::cout << "Back: ";
+  for(auto back:target.back())
+  {
+    std::cout << (int)back << " ";
+  }
+  std::cout << std::endl;
+}
 
 SlaveNodeCSubscriber::SlaveNodeCSubscriber()
 :m_participant(nullptr),

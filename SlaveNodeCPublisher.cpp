@@ -86,14 +86,14 @@ bool SlaveNodeCPublisher::init()
   return 
   initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyInfoListener);
 }
-bool SlaveNodeCPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id = 0)
+bool SlaveNodeCPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
 {
   if(!(vt_topicName.size() == vt_typeName.size() && vt_typeName.size() == vt_dataType.size() && vt_dataType.size() == vt_listener.size()))
   {
     return false;
   }
     DomainParticipantQos paritcipantQos;
-    paritcipantQos.name("mainnode_publisher");
+    paritcipantQos.name("slaveNodec_publisher");
     m_participant = DomainParticipantFactory::get_instance()->create_participant(domain_id,paritcipantQos);
 
     if(!m_participant)

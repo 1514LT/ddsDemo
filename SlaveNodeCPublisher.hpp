@@ -20,7 +20,7 @@ class SlaveNodeCPubListener :public DataWriterListener
 private:
   /* data */
 public:
-  SlaveNodeCPubListener(/* args */);
+  SlaveNodeCPubListener();
   ~SlaveNodeCPubListener() override;
 public:
   std::atomic_int m_matched;
@@ -32,7 +32,7 @@ public:
 class SlaveNodeCPublisher
 {
 private:
-  SlaveNodeBPubListener m_replyInfoListener;
+  SlaveNodeCPubListener m_replyInfoListener;
 
   DomainParticipant* m_participant;
   Publisher* m_publisher;

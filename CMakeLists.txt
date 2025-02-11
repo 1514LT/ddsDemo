@@ -14,7 +14,7 @@ add_library(DDSBase
             SlaveNodeBPublisher.cpp
             SlaveNodeBSubscriber.cpp
             SlaveNodeCPublisher.cpp
-            SlaveNodeCPublisher.cpp)   
+            SlaveNodeCSubscriber.cpp)   
 
 add_executable(${PROJECT_NAME} ${DDSBase} Main.cpp)
                                

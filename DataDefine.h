@@ -523,23 +523,43 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member node
-     * @param _node New value for member node
+     * @brief This function sets a value in member targetNode
+     * @param _targetNode New value for member targetNode
      */
-    eProsima_user_DllExport void node(
-            uint16_t _node);
+    eProsima_user_DllExport void targetNode(
+            uint8_t _targetNode);
 
     /*!
-     * @brief This function returns the value of member node
-     * @return Value of member node
+     * @brief This function returns the value of member targetNode
+     * @return Value of member targetNode
      */
-    eProsima_user_DllExport uint16_t node() const;
+    eProsima_user_DllExport uint8_t targetNode() const;
 
     /*!
-     * @brief This function returns a reference to member node
-     * @return Reference to member node
+     * @brief This function returns a reference to member targetNode
+     * @return Reference to member targetNode
      */
-    eProsima_user_DllExport uint16_t& node();
+    eProsima_user_DllExport uint8_t& targetNode();
+
+
+    /*!
+     * @brief This function sets a value in member startNode
+     * @param _startNode New value for member startNode
+     */
+    eProsima_user_DllExport void startNode(
+            uint8_t _startNode);
+
+    /*!
+     * @brief This function returns the value of member startNode
+     * @return Value of member startNode
+     */
+    eProsima_user_DllExport uint8_t startNode() const;
+
+    /*!
+     * @brief This function returns a reference to member startNode
+     * @return Reference to member startNode
+     */
+    eProsima_user_DllExport uint8_t& startNode();
 
 
     /*!
@@ -700,7 +720,8 @@ private:
 
     uint16_t m_beatCount{0};
     uint8_t m_targetCount{0};
-    uint16_t m_node{0};
+    uint8_t m_targetNode{0};
+    uint8_t m_startNode{0};
     uint8_t m_targetType{0};
     Target m_First;
     Target m_Second;
@@ -872,6 +893,46 @@ public:
 
 
     /*!
+     * @brief This function sets a value in member startNode
+     * @param _startNode New value for member startNode
+     */
+    eProsima_user_DllExport void startNode(
+            uint8_t _startNode);
+
+    /*!
+     * @brief This function returns the value of member startNode
+     * @return Value of member startNode
+     */
+    eProsima_user_DllExport uint8_t startNode() const;
+
+    /*!
+     * @brief This function returns a reference to member startNode
+     * @return Reference to member startNode
+     */
+    eProsima_user_DllExport uint8_t& startNode();
+
+
+    /*!
+     * @brief This function sets a value in member targetNode
+     * @param _targetNode New value for member targetNode
+     */
+    eProsima_user_DllExport void targetNode(
+            uint8_t _targetNode);
+
+    /*!
+     * @brief This function returns the value of member targetNode
+     * @return Value of member targetNode
+     */
+    eProsima_user_DllExport uint8_t targetNode() const;
+
+    /*!
+     * @brief This function returns a reference to member targetNode
+     * @return Reference to member targetNode
+     */
+    eProsima_user_DllExport uint8_t& targetNode();
+
+
+    /*!
      * @brief This function sets a value in member number1
      * @param _number1 New value for member number1
      */
@@ -892,23 +953,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer1
-     * @param _resultNumer1 New value for member resultNumer1
+     * @brief This function copies the value in member resultNumer1
+     * @param _resultNumer1 New value to be copied in member resultNumer1
      */
     eProsima_user_DllExport void resultNumer1(
-            uint16_t _resultNumer1);
+            const std::array<uint8_t, 2>& _resultNumer1);
 
     /*!
-     * @brief This function returns the value of member resultNumer1
-     * @return Value of member resultNumer1
+     * @brief This function moves the value in member resultNumer1
+     * @param _resultNumer1 New value to be moved in member resultNumer1
      */
-    eProsima_user_DllExport uint16_t resultNumer1() const;
+    eProsima_user_DllExport void resultNumer1(
+            std::array<uint8_t, 2>&& _resultNumer1);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer1
+     * @return Constant reference to member resultNumer1
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer1() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer1
      * @return Reference to member resultNumer1
      */
-    eProsima_user_DllExport uint16_t& resultNumer1();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer1();
 
 
     /*!
@@ -932,23 +1000,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer2
-     * @param _resultNumer2 New value for member resultNumer2
+     * @brief This function copies the value in member resultNumer2
+     * @param _resultNumer2 New value to be copied in member resultNumer2
      */
     eProsima_user_DllExport void resultNumer2(
-            uint16_t _resultNumer2);
+            const std::array<uint8_t, 2>& _resultNumer2);
 
     /*!
-     * @brief This function returns the value of member resultNumer2
-     * @return Value of member resultNumer2
+     * @brief This function moves the value in member resultNumer2
+     * @param _resultNumer2 New value to be moved in member resultNumer2
      */
-    eProsima_user_DllExport uint16_t resultNumer2() const;
+    eProsima_user_DllExport void resultNumer2(
+            std::array<uint8_t, 2>&& _resultNumer2);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer2
+     * @return Constant reference to member resultNumer2
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer2() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer2
      * @return Reference to member resultNumer2
      */
-    eProsima_user_DllExport uint16_t& resultNumer2();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer2();
 
 
     /*!
@@ -972,23 +1047,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer3
-     * @param _resultNumer3 New value for member resultNumer3
+     * @brief This function copies the value in member resultNumer3
+     * @param _resultNumer3 New value to be copied in member resultNumer3
      */
     eProsima_user_DllExport void resultNumer3(
-            uint16_t _resultNumer3);
+            const std::array<uint8_t, 2>& _resultNumer3);
 
     /*!
-     * @brief This function returns the value of member resultNumer3
-     * @return Value of member resultNumer3
+     * @brief This function moves the value in member resultNumer3
+     * @param _resultNumer3 New value to be moved in member resultNumer3
      */
-    eProsima_user_DllExport uint16_t resultNumer3() const;
+    eProsima_user_DllExport void resultNumer3(
+            std::array<uint8_t, 2>&& _resultNumer3);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer3
+     * @return Constant reference to member resultNumer3
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer3() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer3
      * @return Reference to member resultNumer3
      */
-    eProsima_user_DllExport uint16_t& resultNumer3();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer3();
 
 
     /*!
@@ -1012,23 +1094,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer4
-     * @param _resultNumer4 New value for member resultNumer4
+     * @brief This function copies the value in member resultNumer4
+     * @param _resultNumer4 New value to be copied in member resultNumer4
      */
     eProsima_user_DllExport void resultNumer4(
-            uint16_t _resultNumer4);
+            const std::array<uint8_t, 2>& _resultNumer4);
 
     /*!
-     * @brief This function returns the value of member resultNumer4
-     * @return Value of member resultNumer4
+     * @brief This function moves the value in member resultNumer4
+     * @param _resultNumer4 New value to be moved in member resultNumer4
      */
-    eProsima_user_DllExport uint16_t resultNumer4() const;
+    eProsima_user_DllExport void resultNumer4(
+            std::array<uint8_t, 2>&& _resultNumer4);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer4
+     * @return Constant reference to member resultNumer4
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer4() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer4
      * @return Reference to member resultNumer4
      */
-    eProsima_user_DllExport uint16_t& resultNumer4();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer4();
 
 
     /*!
@@ -1052,23 +1141,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer5
-     * @param _resultNumer5 New value for member resultNumer5
+     * @brief This function copies the value in member resultNumer5
+     * @param _resultNumer5 New value to be copied in member resultNumer5
      */
     eProsima_user_DllExport void resultNumer5(
-            uint16_t _resultNumer5);
+            const std::array<uint8_t, 2>& _resultNumer5);
 
     /*!
-     * @brief This function returns the value of member resultNumer5
-     * @return Value of member resultNumer5
+     * @brief This function moves the value in member resultNumer5
+     * @param _resultNumer5 New value to be moved in member resultNumer5
      */
-    eProsima_user_DllExport uint16_t resultNumer5() const;
+    eProsima_user_DllExport void resultNumer5(
+            std::array<uint8_t, 2>&& _resultNumer5);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer5
+     * @return Constant reference to member resultNumer5
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer5() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer5
      * @return Reference to member resultNumer5
      */
-    eProsima_user_DllExport uint16_t& resultNumer5();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer5();
 
 
     /*!
@@ -1092,23 +1188,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer6
-     * @param _resultNumer6 New value for member resultNumer6
+     * @brief This function copies the value in member resultNumer6
+     * @param _resultNumer6 New value to be copied in member resultNumer6
      */
     eProsima_user_DllExport void resultNumer6(
-            uint16_t _resultNumer6);
+            const std::array<uint8_t, 2>& _resultNumer6);
 
     /*!
-     * @brief This function returns the value of member resultNumer6
-     * @return Value of member resultNumer6
+     * @brief This function moves the value in member resultNumer6
+     * @param _resultNumer6 New value to be moved in member resultNumer6
      */
-    eProsima_user_DllExport uint16_t resultNumer6() const;
+    eProsima_user_DllExport void resultNumer6(
+            std::array<uint8_t, 2>&& _resultNumer6);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer6
+     * @return Constant reference to member resultNumer6
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer6() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer6
      * @return Reference to member resultNumer6
      */
-    eProsima_user_DllExport uint16_t& resultNumer6();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer6();
 
 
     /*!
@@ -1132,23 +1235,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer7
-     * @param _resultNumer7 New value for member resultNumer7
+     * @brief This function copies the value in member resultNumer7
+     * @param _resultNumer7 New value to be copied in member resultNumer7
      */
     eProsima_user_DllExport void resultNumer7(
-            uint16_t _resultNumer7);
+            const std::array<uint8_t, 2>& _resultNumer7);
 
     /*!
-     * @brief This function returns the value of member resultNumer7
-     * @return Value of member resultNumer7
+     * @brief This function moves the value in member resultNumer7
+     * @param _resultNumer7 New value to be moved in member resultNumer7
      */
-    eProsima_user_DllExport uint16_t resultNumer7() const;
+    eProsima_user_DllExport void resultNumer7(
+            std::array<uint8_t, 2>&& _resultNumer7);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer7
+     * @return Constant reference to member resultNumer7
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer7() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer7
      * @return Reference to member resultNumer7
      */
-    eProsima_user_DllExport uint16_t& resultNumer7();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer7();
 
 
     /*!
@@ -1172,23 +1282,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer8
-     * @param _resultNumer8 New value for member resultNumer8
+     * @brief This function copies the value in member resultNumer8
+     * @param _resultNumer8 New value to be copied in member resultNumer8
      */
     eProsima_user_DllExport void resultNumer8(
-            uint16_t _resultNumer8);
+            const std::array<uint8_t, 2>& _resultNumer8);
 
     /*!
-     * @brief This function returns the value of member resultNumer8
-     * @return Value of member resultNumer8
+     * @brief This function moves the value in member resultNumer8
+     * @param _resultNumer8 New value to be moved in member resultNumer8
      */
-    eProsima_user_DllExport uint16_t resultNumer8() const;
+    eProsima_user_DllExport void resultNumer8(
+            std::array<uint8_t, 2>&& _resultNumer8);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer8
+     * @return Constant reference to member resultNumer8
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer8() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer8
      * @return Reference to member resultNumer8
      */
-    eProsima_user_DllExport uint16_t& resultNumer8();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer8();
 
 
     /*!
@@ -1212,23 +1329,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer9
-     * @param _resultNumer9 New value for member resultNumer9
+     * @brief This function copies the value in member resultNumer9
+     * @param _resultNumer9 New value to be copied in member resultNumer9
      */
     eProsima_user_DllExport void resultNumer9(
-            uint16_t _resultNumer9);
+            const std::array<uint8_t, 2>& _resultNumer9);
 
     /*!
-     * @brief This function returns the value of member resultNumer9
-     * @return Value of member resultNumer9
+     * @brief This function moves the value in member resultNumer9
+     * @param _resultNumer9 New value to be moved in member resultNumer9
      */
-    eProsima_user_DllExport uint16_t resultNumer9() const;
+    eProsima_user_DllExport void resultNumer9(
+            std::array<uint8_t, 2>&& _resultNumer9);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer9
+     * @return Constant reference to member resultNumer9
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer9() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer9
      * @return Reference to member resultNumer9
      */
-    eProsima_user_DllExport uint16_t& resultNumer9();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer9();
 
 
     /*!
@@ -1252,23 +1376,30 @@ public:
 
 
     /*!
-     * @brief This function sets a value in member resultNumer10
-     * @param _resultNumer10 New value for member resultNumer10
+     * @brief This function copies the value in member resultNumer10
+     * @param _resultNumer10 New value to be copied in member resultNumer10
      */
     eProsima_user_DllExport void resultNumer10(
-            uint16_t _resultNumer10);
+            const std::array<uint8_t, 2>& _resultNumer10);
 
     /*!
-     * @brief This function returns the value of member resultNumer10
-     * @return Value of member resultNumer10
+     * @brief This function moves the value in member resultNumer10
+     * @param _resultNumer10 New value to be moved in member resultNumer10
      */
-    eProsima_user_DllExport uint16_t resultNumer10() const;
+    eProsima_user_DllExport void resultNumer10(
+            std::array<uint8_t, 2>&& _resultNumer10);
+
+    /*!
+     * @brief This function returns a constant reference to member resultNumer10
+     * @return Constant reference to member resultNumer10
+     */
+    eProsima_user_DllExport const std::array<uint8_t, 2>& resultNumer10() const;
 
     /*!
      * @brief This function returns a reference to member resultNumer10
      * @return Reference to member resultNumer10
      */
-    eProsima_user_DllExport uint16_t& resultNumer10();
+    eProsima_user_DllExport std::array<uint8_t, 2>& resultNumer10();
 
 private:
 
@@ -1277,26 +1408,28 @@ private:
     uint16_t m_sucessNumber{0};
     uint16_t m_executionNumber{0};
     uint16_t m_ownTargetNumber{0};
+    uint8_t m_startNode{0};
+    uint8_t m_targetNode{0};
     uint16_t m_number1{0};
-    uint16_t m_resultNumer1{0};
+    std::array<uint8_t, 2> m_resultNumer1{0};
     uint16_t m_number2{0};
-    uint16_t m_resultNumer2{0};
+    std::array<uint8_t, 2> m_resultNumer2{0};
     uint16_t m_number3{0};
-    uint16_t m_resultNumer3{0};
+    std::array<uint8_t, 2> m_resultNumer3{0};
     uint16_t m_number4{0};
-    uint16_t m_resultNumer4{0};
+    std::array<uint8_t, 2> m_resultNumer4{0};
     uint16_t m_number5{0};
-    uint16_t m_resultNumer5{0};
+    std::array<uint8_t, 2> m_resultNumer5{0};
     uint16_t m_number6{0};
-    uint16_t m_resultNumer6{0};
+    std::array<uint8_t, 2> m_resultNumer6{0};
     uint16_t m_number7{0};
-    uint16_t m_resultNumer7{0};
+    std::array<uint8_t, 2> m_resultNumer7{0};
     uint16_t m_number8{0};
-    uint16_t m_resultNumer8{0};
+    std::array<uint8_t, 2> m_resultNumer8{0};
     uint16_t m_number9{0};
-    uint16_t m_resultNumer9{0};
+    std::array<uint8_t, 2> m_resultNumer9{0};
     uint16_t m_number10{0};
-    uint16_t m_resultNumer10{0};
+    std::array<uint8_t, 2> m_resultNumer10{0};
 
 };
 
