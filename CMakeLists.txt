@@ -31,6 +31,7 @@ target_link_libraries(${PROJECT_NAME}
                       DDSBase 
                       ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastrtps.so
                       ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastcdr.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libtinyxml2.so
                       pthread)
 endif()
 
