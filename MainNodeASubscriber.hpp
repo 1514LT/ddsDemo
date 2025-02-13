@@ -3,6 +3,9 @@
 
 #include "DataDefine.h"
 #include "DataDefinePubSubTypes.h"
+#include "Gloable.hpp"
+#include "MainNodeAPublisher.hpp"
+#include <thread>
 
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
@@ -34,6 +37,11 @@ public:
 
 class MainNodeASubscriber
 {
+  template <typename Function, typename... Args>
+  void start(Function&& f, Args&&... args)
+  {
+      std::thread(std::forward<Function>(f), std::forward<Args>(args)...).detach();
+  }
 private:
   DomainParticipant * m_participant;
   Subscriber * m_subscriber;
@@ -41,6 +49,10 @@ private:
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
   MainNodeASubListener m_replyInfoListener;
+  MainNodeASubListener m_heartBeatListener;
+
+  std::shared_ptr<MainNodeAPublisher> m_publisher;
+  int m_timeinterval;
 public:
   MainNodeASubscriber();
   ~MainNodeASubscriber();
@@ -48,6 +60,8 @@ public:
   bool init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id = 0);
 
   bool initSubType(const std::string &topicName, const std::string & typeName, TopicDataType *dataType, DataReaderListener * listener);
+  void HandleHeartBeat();
+  void Run();
 };
 
 

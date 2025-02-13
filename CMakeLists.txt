@@ -8,13 +8,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_library(DDSBase
             SHARED
             DataDefine.cxx 
+            Gloable.cpp
             DataDefinePubSubTypes.cxx
             MainNodeAPublisher.cpp
             MainNodeASubscriber.cpp
             SlaveNodeBPublisher.cpp
             SlaveNodeBSubscriber.cpp
             SlaveNodeCPublisher.cpp
-            SlaveNodeCSubscriber.cpp)   
+            SlaveNodeCSubscriber.cpp
+            SlaveNodeDPublisher.cpp
+            SlaveNodeDSubscriber.cpp)   
 
 add_executable(${PROJECT_NAME} ${DDSBase} Main.cpp)
                                

@@ -3,6 +3,7 @@
 
 #include "DataDefine.h"
 #include "DataDefinePubSubTypes.h"
+#include "Gloable.hpp"
 
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
@@ -38,7 +39,8 @@ private:
   Publisher* m_publisher;
   std::vector<TypeSupport> m_typeVec;
   std::vector<std::pair<Topic*,DataWriter*> > m_writers;
-  MainNodeAPubListenner m_GuidanceInfoListener;
+  MainNodeAPubListenner m_guidanceInfoListener;
+  MainNodeAPubListenner m_guidanceNodeDStartInfoListener;
   
 public:
   MainNodeAPublisher();
@@ -50,6 +52,9 @@ public:
 public:
   bool GuidanceInfoMatched();
   bool PublishGuidanceInfo(GuidanceInfo &guidanceInfo);
+
+  bool GuidanceNodeDStartInfoMatched();
+  bool PublishGuidanceNodeDStartInfo(GuidanceNodeDStartInfo &guidanceNodeDStartInfo);
 
 };
 

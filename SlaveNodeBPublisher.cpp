@@ -48,6 +48,12 @@ SlaveNodeBPublisher::~SlaveNodeBPublisher()
       m_participant->delete_publisher(m_publisher);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
+  if(!m_guidanceInfoListener)
+    delete m_guidanceInfoListener;
+  if(!m_replyInfoListener)
+    delete m_replyInfoListener;
+  if(!m_heartBeatListener)
+    delete m_heartBeatListener;
 }
 
 
@@ -85,11 +91,17 @@ bool SlaveNodeBPublisher::init()
       return false;
   }
 
-  m_typeVec.reserve(2);
-  m_writers.reserve(2);
-  return 
-  initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyInfoListener) &&
-  initPubType("GuidanceInfoTopic","GuidanceInfo",new GuidanceInfoPubSubType,&m_guidanceInfoListener);
+  m_typeVec.reserve(3);
+  m_writers.reserve(3);
+  m_replyInfoListener = new SlaveNodeBPubListener;
+  m_guidanceInfoListener = new SlaveNodeBPubListener;
+  m_heartBeatListener = new SlaveNodeBPubListener;
+  bool flag = true;
+  flag && initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_replyInfoListener) &&
+  initPubType("GuidanceInfoTopic","GuidanceInfo",new GuidanceInfoPubSubType,m_guidanceInfoListener) &&
+  initPubType("HeartBeatTopic","HeartBeat",new  HeartBeatPubSubType,m_heartBeatListener);
+  start(&SlaveNodeBPublisher::handleHeartbeat,this);
+  return flag;
 }
 bool SlaveNodeBPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
 {
@@ -121,9 +133,25 @@ bool SlaveNodeBPublisher::init(std::vector<std::string> vt_topicName,std::vector
     return flag;  
 }
 
+void SlaveNodeBPublisher::handleHeartbeat()
+{
+  while (true)
+  {
+    if(heartBeatInfoMatched())
+    {
+      HeartBeat heartBeat;
+      heartBeat.isOnline(0x01);
+      publishHeartBeatInfo(heartBeat);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000)); 
+  }
+}
+
 bool SlaveNodeBPublisher::replayInfoMatched()
 {
-  return m_replyInfoListener.m_matched > 0;
+  if(!m_replyInfoListener)
+    return false;
+  return m_replyInfoListener->m_matched > 0;
 }
 bool SlaveNodeBPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 {
@@ -132,10 +160,21 @@ bool SlaveNodeBPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 
 bool SlaveNodeBPublisher::guidanceInfoMatched()
 {
-  return m_guidanceInfoListener.m_matched > 0;
+  if(!m_guidanceInfoListener)
+    return false;
+  return m_guidanceInfoListener->m_matched > 0;
 }
 
 bool SlaveNodeBPublisher::publishGuidanceInfo(GuidanceInfo &guidanceInfo)
 {
   return m_writers.size() > 1 && m_writers[1].second->write(&guidanceInfo);
+}
+
+bool SlaveNodeBPublisher::heartBeatInfoMatched()
+{
+  return m_heartBeatListener->m_matched > 0;
+}
+bool SlaveNodeBPublisher::publishHeartBeatInfo(HeartBeat &heartBeat)
+{
+  return m_writers.size() > 1 && m_writers[2].second->write(&heartBeat);
 }

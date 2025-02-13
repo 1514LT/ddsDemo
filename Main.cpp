@@ -6,6 +6,8 @@
 #include "SlaveNodeBSubscriber.hpp"
 #include "SlaveNodeCPublisher.hpp"
 #include "SlaveNodeCSubscriber.hpp"
+#include "SlaveNodeDPublisher.hpp"
+#include "SlaveNodeDSubscriber.hpp"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -47,6 +49,10 @@ int main(int argc, char const *argv[])
     {
       mainNode = 3;
     }
+    else if(arg1 == "nodeD")
+    {
+      mainNode = 4;
+    }
     else if(arg1 == "-h" || arg1 == "--help") 
     {
         printHelp();
@@ -78,10 +84,17 @@ int main(int argc, char const *argv[])
     if(mainNode == 1)
     {
       // nodeA
-      MainNodeAPublisher publisher;
-      publisher.init();
+
       MainNodeASubscriber subscriber;
       subscriber.init();
+      // while (true)
+      // {
+      //   std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
+      // }
+      
+      #if 1
+      MainNodeAPublisher publisher;
+      publisher.init();
       while (true)
       {
         if(publisher.GuidanceInfoMatched())
@@ -120,6 +133,7 @@ int main(int argc, char const *argv[])
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
       }
+      #endif
       
     }
     else if (mainNode == 2)
@@ -137,6 +151,16 @@ int main(int argc, char const *argv[])
     {
       // node C
       SlaveNodeCSubscriber subscriber;
+      subscriber.init();
+      while (true)
+      {
+        std::this_thread::sleep_for(std::chrono::milliseconds(timeinterval)); 
+      }
+    }
+    else if(mainNode == 4)
+    {
+      // node D
+      SlaveNodeDSubscriber subscriber;
       subscriber.init();
       while (true)
       {

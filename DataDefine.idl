@@ -81,3 +81,13 @@ struct ReplyInfo
   unsigned short number10;
   octet resultNumer10[2]; 
 };
+
+struct HeartBeat
+{
+  octet isOnline;
+};
+
+struct GuidanceNodeDStartInfo
+{
+  octet isStart;
+};

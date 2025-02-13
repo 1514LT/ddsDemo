@@ -27,8 +27,14 @@
 constexpr uint32_t GuidanceInfo_max_cdr_typesize {209UL};
 constexpr uint32_t GuidanceInfo_max_key_cdr_typesize {0UL};
 
+constexpr uint32_t HeartBeat_max_cdr_typesize {5UL};
+constexpr uint32_t HeartBeat_max_key_cdr_typesize {0UL};
+
 constexpr uint32_t Target_max_cdr_typesize {37UL};
 constexpr uint32_t Target_max_key_cdr_typesize {0UL};
+
+constexpr uint32_t GuidanceNodeDStartInfo_max_cdr_typesize {5UL};
+constexpr uint32_t GuidanceNodeDStartInfo_max_key_cdr_typesize {0UL};
 
 constexpr uint32_t ReplyInfo_max_cdr_typesize {56UL};
 constexpr uint32_t ReplyInfo_max_key_cdr_typesize {0UL};
@@ -57,6 +63,18 @@ eProsima_user_DllExport void serialize_key(
 eProsima_user_DllExport void serialize_key(
         eprosima::fastcdr::Cdr& scdr,
         const ReplyInfo& data);
+
+
+
+eProsima_user_DllExport void serialize_key(
+        eprosima::fastcdr::Cdr& scdr,
+        const HeartBeat& data);
+
+
+
+eProsima_user_DllExport void serialize_key(
+        eprosima::fastcdr::Cdr& scdr,
+        const GuidanceNodeDStartInfo& data);
 
 
 } // namespace fastcdr

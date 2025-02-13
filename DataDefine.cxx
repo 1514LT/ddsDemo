@@ -2042,6 +2042,164 @@ std::array<uint8_t, 2>& ReplyInfo::resultNumer10()
 }
 
 
+
+
+HeartBeat::HeartBeat()
+{
+}
+
+HeartBeat::~HeartBeat()
+{
+}
+
+HeartBeat::HeartBeat(
+        const HeartBeat& x)
+{
+    m_isOnline = x.m_isOnline;
+}
+
+HeartBeat::HeartBeat(
+        HeartBeat&& x) noexcept
+{
+    m_isOnline = x.m_isOnline;
+}
+
+HeartBeat& HeartBeat::operator =(
+        const HeartBeat& x)
+{
+
+    m_isOnline = x.m_isOnline;
+    return *this;
+}
+
+HeartBeat& HeartBeat::operator =(
+        HeartBeat&& x) noexcept
+{
+
+    m_isOnline = x.m_isOnline;
+    return *this;
+}
+
+bool HeartBeat::operator ==(
+        const HeartBeat& x) const
+{
+    return (m_isOnline == x.m_isOnline);
+}
+
+bool HeartBeat::operator !=(
+        const HeartBeat& x) const
+{
+    return !(*this == x);
+}
+
+/*!
+ * @brief This function sets a value in member isOnline
+ * @param _isOnline New value for member isOnline
+ */
+void HeartBeat::isOnline(
+        uint8_t _isOnline)
+{
+    m_isOnline = _isOnline;
+}
+
+/*!
+ * @brief This function returns the value of member isOnline
+ * @return Value of member isOnline
+ */
+uint8_t HeartBeat::isOnline() const
+{
+    return m_isOnline;
+}
+
+/*!
+ * @brief This function returns a reference to member isOnline
+ * @return Reference to member isOnline
+ */
+uint8_t& HeartBeat::isOnline()
+{
+    return m_isOnline;
+}
+
+
+
+
+GuidanceNodeDStartInfo::GuidanceNodeDStartInfo()
+{
+}
+
+GuidanceNodeDStartInfo::~GuidanceNodeDStartInfo()
+{
+}
+
+GuidanceNodeDStartInfo::GuidanceNodeDStartInfo(
+        const GuidanceNodeDStartInfo& x)
+{
+    m_isStart = x.m_isStart;
+}
+
+GuidanceNodeDStartInfo::GuidanceNodeDStartInfo(
+        GuidanceNodeDStartInfo&& x) noexcept
+{
+    m_isStart = x.m_isStart;
+}
+
+GuidanceNodeDStartInfo& GuidanceNodeDStartInfo::operator =(
+        const GuidanceNodeDStartInfo& x)
+{
+
+    m_isStart = x.m_isStart;
+    return *this;
+}
+
+GuidanceNodeDStartInfo& GuidanceNodeDStartInfo::operator =(
+        GuidanceNodeDStartInfo&& x) noexcept
+{
+
+    m_isStart = x.m_isStart;
+    return *this;
+}
+
+bool GuidanceNodeDStartInfo::operator ==(
+        const GuidanceNodeDStartInfo& x) const
+{
+    return (m_isStart == x.m_isStart);
+}
+
+bool GuidanceNodeDStartInfo::operator !=(
+        const GuidanceNodeDStartInfo& x) const
+{
+    return !(*this == x);
+}
+
+/*!
+ * @brief This function sets a value in member isStart
+ * @param _isStart New value for member isStart
+ */
+void GuidanceNodeDStartInfo::isStart(
+        uint8_t _isStart)
+{
+    m_isStart = _isStart;
+}
+
+/*!
+ * @brief This function returns the value of member isStart
+ * @return Value of member isStart
+ */
+uint8_t GuidanceNodeDStartInfo::isStart() const
+{
+    return m_isStart;
+}
+
+/*!
+ * @brief This function returns a reference to member isStart
+ * @return Reference to member isStart
+ */
+uint8_t& GuidanceNodeDStartInfo::isStart()
+{
+    return m_isStart;
+}
+
+
 // Include auxiliary functions like for serializing/deserializing.
 #include "DataDefineCdrAux.ipp"
 

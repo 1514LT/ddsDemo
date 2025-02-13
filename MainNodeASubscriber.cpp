@@ -13,10 +13,12 @@ void MainNodeASubListener::on_subscription_matched(DataReader * reader, const Su
   if(info.current_count_change == 1)
   {
       std::cout << "Subscriber matched, topic:" + reader->get_topicdescription()->get_name() + ", count:" + std::to_string(info.current_count) << std::endl;
+      std::cout << "Last matched publisher handle:" << info.last_publication_handle << std::endl;
   }
   else if(info.current_count_change == -1)
   {
       std::cout << "Subscriber unmatched, topic:" + reader->get_topicdescription()->get_name() + ", count:" + std::to_string(info.current_count) << std::endl;
+      std::cout << "Last unmatched publisher handle:" << info.last_publication_handle << std::endl;
   }
   else 
   {
@@ -68,13 +70,87 @@ void MainNodeASubListener::on_data_available(DataReader * reader)
       }
     }
   }
+  else if (reader->get_topicdescription()->get_name() == "HeartBeatTopic")
+  {
+    HeartBeat msg;
+    while (reader->take_next_sample(&msg, &info) == ReturnCode_t::RETCODE_OK)
+    {
+      if (info.valid_data)
+      {
+        std::cout << (int)msg.isOnline() << std::endl;
+        is_nodeD_online = 1;
+      }
+    }
+  }
+}
+void MainNodeASubscriber::HandleHeartBeat()
+{
+  while (true)
+  {
+    if(!is_nodeD_online)
+    {
+      if(m_publisher->GuidanceNodeDStartInfoMatched())
+      {
+        GuidanceNodeDStartInfo guidanceNodeDStartInfo;
+        guidanceNodeDStartInfo.isStart(0x01);
+        m_publisher->PublishGuidanceNodeDStartInfo(guidanceNodeDStartInfo);
+      }
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval)); 
+  }
+}
+void MainNodeASubscriber::Run()
+{
+  while (true)
+  {
+    if(m_publisher->GuidanceInfoMatched())
+    {
+      GuidanceInfo guidanceInfo;
+      guidanceInfo.beatCount(11111);
+      guidanceInfo.targetCount(5);
+      guidanceInfo.startNode(0x00);
+      guidanceInfo.targetNode(0x02);
+      guidanceInfo.targetType(0x55);
+      Target First,Second,Third,Fourth,Fifth;
+      First.targetNumber(11111);
+      std::array<u_int8_t,6> timeNumber = {0x00,0x5f,0x7a,0x0d,0x1b,0xfc};
+      First.time(timeNumber);
+      First.longitude(-9000000);
+      First.latitude(-18000000);
+      First.elevation(0);
+      First.Priority(0);
+      First.confidenceDegree(0);
+      First.informationType(0x0001);
+      First.positionAccuracy(20);
+      First.imagingMode(0);
+      First.desiredTrack(0);
+      // try
+      First.shipSpeed(0.1);
+      std::array<u_int8_t,5> back;
+      back.fill(0x00);
+      First.back(back);
+
+      guidanceInfo.First(First);
+      guidanceInfo.Second(First);
+      guidanceInfo.Third(First);
+      guidanceInfo.Fourth(First);
+      guidanceInfo.Fifth(First);
+      m_publisher->PublishGuidanceInfo(guidanceInfo);
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval)); 
+  }
 }
 
 MainNodeASubscriber::MainNodeASubscriber()
 :m_participant(nullptr),
 m_subscriber(nullptr),
-m_topic(nullptr)
+m_topic(nullptr),
+m_timeinterval(5000)
 {
+  // m_publisher = std::make_shared<MainNodeAPublisher>();
+  // m_publisher->init();
+  // start(&MainNodeASubscriber::HandleHeartBeat,this);
+  // start(&MainNodeASubscriber::Run,this);
 }
 
 MainNodeASubscriber::~MainNodeASubscriber()
@@ -107,7 +183,8 @@ bool MainNodeASubscriber::init()
       return false;
   }
   return
-  initSubType("ReplyInfoTopic","ReplyInfo",new ReplyInfoPubSubType,&m_replyInfoListener);
+  initSubType("ReplyInfoTopic","ReplyInfo",new ReplyInfoPubSubType,&m_replyInfoListener)&&
+  initSubType("HeartBeatTopic","HeartBeat",new HeartBeatPubSubType,&m_heartBeatListener);
 }
 
 bool MainNodeASubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)

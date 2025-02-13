@@ -1433,6 +1433,178 @@ private:
 
 };
 
+
+/*!
+ * @brief This class represents the structure HeartBeat defined by the user in the IDL file.
+ * @ingroup DataDefine
+ */
+class HeartBeat
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport HeartBeat();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~HeartBeat();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object HeartBeat that will be copied.
+     */
+    eProsima_user_DllExport HeartBeat(
+            const HeartBeat& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object HeartBeat that will be copied.
+     */
+    eProsima_user_DllExport HeartBeat(
+            HeartBeat&& x) noexcept;
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object HeartBeat that will be copied.
+     */
+    eProsima_user_DllExport HeartBeat& operator =(
+            const HeartBeat& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object HeartBeat that will be copied.
+     */
+    eProsima_user_DllExport HeartBeat& operator =(
+            HeartBeat&& x) noexcept;
+
+    /*!
+     * @brief Comparison operator.
+     * @param x HeartBeat object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const HeartBeat& x) const;
+
+    /*!
+     * @brief Comparison operator.
+     * @param x HeartBeat object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const HeartBeat& x) const;
+
+    /*!
+     * @brief This function sets a value in member isOnline
+     * @param _isOnline New value for member isOnline
+     */
+    eProsima_user_DllExport void isOnline(
+            uint8_t _isOnline);
+
+    /*!
+     * @brief This function returns the value of member isOnline
+     * @return Value of member isOnline
+     */
+    eProsima_user_DllExport uint8_t isOnline() const;
+
+    /*!
+     * @brief This function returns a reference to member isOnline
+     * @return Reference to member isOnline
+     */
+    eProsima_user_DllExport uint8_t& isOnline();
+
+private:
+
+    uint8_t m_isOnline{0};
+
+};
+
+
+/*!
+ * @brief This class represents the structure GuidanceNodeDStartInfo defined by the user in the IDL file.
+ * @ingroup DataDefine
+ */
+class GuidanceNodeDStartInfo
+{
+public:
+
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport GuidanceNodeDStartInfo();
+
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~GuidanceNodeDStartInfo();
+
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object GuidanceNodeDStartInfo that will be copied.
+     */
+    eProsima_user_DllExport GuidanceNodeDStartInfo(
+            const GuidanceNodeDStartInfo& x);
+
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object GuidanceNodeDStartInfo that will be copied.
+     */
+    eProsima_user_DllExport GuidanceNodeDStartInfo(
+            GuidanceNodeDStartInfo&& x) noexcept;
+
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object GuidanceNodeDStartInfo that will be copied.
+     */
+    eProsima_user_DllExport GuidanceNodeDStartInfo& operator =(
+            const GuidanceNodeDStartInfo& x);
+
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object GuidanceNodeDStartInfo that will be copied.
+     */
+    eProsima_user_DllExport GuidanceNodeDStartInfo& operator =(
+            GuidanceNodeDStartInfo&& x) noexcept;
+
+    /*!
+     * @brief Comparison operator.
+     * @param x GuidanceNodeDStartInfo object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const GuidanceNodeDStartInfo& x) const;
+
+    /*!
+     * @brief Comparison operator.
+     * @param x GuidanceNodeDStartInfo object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const GuidanceNodeDStartInfo& x) const;
+
+    /*!
+     * @brief This function sets a value in member isStart
+     * @param _isStart New value for member isStart
+     */
+    eProsima_user_DllExport void isStart(
+            uint8_t _isStart);
+
+    /*!
+     * @brief This function returns the value of member isStart
+     * @return Value of member isStart
+     */
+    eProsima_user_DllExport uint8_t isStart() const;
+
+    /*!
+     * @brief This function returns a reference to member isStart
+     * @return Reference to member isStart
+     */
+    eProsima_user_DllExport uint8_t& isStart();
+
+private:
+
+    uint8_t m_isStart{0};
+
+};
+
 #endif // _FAST_DDS_GENERATED_DATADEFINE_H_
 
 

@@ -50,6 +50,7 @@ void SlaveNodeBSubListener::on_data_available(DataReader * reader)
         if((int)msg.startNode() != 0)
           return;
         printf("recv GuidanceInfoTopic info\n");
+        #if 0
         std::cout << "本节拍总目标数" << (short)msg.beatCount() << std::endl;
         std::cout << "本包目标数" << (int)msg.targetCount() << std::endl;
         std::cout << "起始节点" << (int)msg.startNode() << std::endl;
@@ -70,9 +71,11 @@ void SlaveNodeBSubListener::on_data_available(DataReader * reader)
     
         std::cout << "\nFifth Target:" << std::endl;
         printTarget(msg.Fifth());
+        #endif
         if((int)msg.targetNode() == 1)
         {
           // send nodeA
+          printf("send nodeA\n");
           if(m_publisher->replayInfoMatched())
           {
             ReplyInfo replyInfo;
@@ -100,6 +103,7 @@ void SlaveNodeBSubListener::on_data_available(DataReader * reader)
         if((int)msg.targetNode() == 2)
         {
           // send nodeB
+          printf("send nodeC\n");
           if(m_publisher->guidanceInfoMatched())
           {
             msg.startNode(0x01);
@@ -118,6 +122,8 @@ void SlaveNodeBSubListener::on_data_available(DataReader * reader)
       {
         if(msg.startNode()!= 2)
           return;
+        printf("recv nodeC ReplyInfoTopic msg\n");
+        #if 0
         std::cout << "Start Node: " << (int)msg.startNode() << std::endl;
         std::cout << "Target Node " << (int)msg.targetNode() << std::endl;
         std::cout << "Target Number: " << msg.targetNumber() << std::endl;
@@ -136,6 +142,7 @@ void SlaveNodeBSubListener::on_data_available(DataReader * reader)
         std::cout << "Number 8: " << msg.number8() << ", Result Number 8: " << showResult(msg.resultNumer8()) << std::endl;
         std::cout << "Number 9: " << msg.number9() << ", Result Number 9: " << showResult(msg.resultNumer9()) << std::endl;
         std::cout << "Number 10: " << msg.number10() << ", Result Number 10: " << showResult(msg.resultNumer10()) << std::endl;
+        #endif
         // send nodeA
         msg.startNode(0x01);
         msg.targetNode(0x00);
@@ -196,6 +203,10 @@ SlaveNodeBSubscriber::~SlaveNodeBSubscriber()
     m_participant->delete_subscriber(m_subscriber);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
+  if(!m_guidanceInfoListener)
+    delete m_guidanceInfoListener;
+  if(!m_replyinfoListener)
+    delete m_replyinfoListener;
 }
 
 bool SlaveNodeBSubscriber::initSubType(const std::string &topicName, const std::string & typeName, TopicDataType *dataType, DataReaderListener * listener)
@@ -235,9 +246,11 @@ bool SlaveNodeBSubscriber::init()
   {
       return false;
   }
+  m_guidanceInfoListener = new SlaveNodeBSubListener;
+  m_replyinfoListener = new SlaveNodeBSubListener;
   return
-  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,&m_guidanceInfoListener) &&
-  initSubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyinfoListener);
+  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,m_guidanceInfoListener) &&
+  initSubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_replyinfoListener);
 }
 bool SlaveNodeBSubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)
 {
