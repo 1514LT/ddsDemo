@@ -38,7 +38,7 @@ private:
   std::vector<std::pair<Topic*,DataReader*> > m_readers;
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
-  SlaveNodeDSubListener m_guidanceNodeDStartInfoListener;
+  SlaveNodeDSubListener m_listener;
 public:
   SlaveNodeDSubscriber();
   ~SlaveNodeDSubscriber();

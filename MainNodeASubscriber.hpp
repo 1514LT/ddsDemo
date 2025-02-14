@@ -55,8 +55,7 @@ private:
   std::vector<std::pair<Topic*,DataReader*> > m_readers;
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
-  MainNodeASubListener m_replyInfoListener;
-  MainNodeASubListener m_heartBeatListener;
+  MainNodeASubListener m_listener;
 
   MainNodeAPublisher* m_nodeA_publisher;
   int m_timeinterval;

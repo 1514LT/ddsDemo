@@ -85,13 +85,13 @@ bool SlaveNodeDPublisher::init()
   m_typeVec.reserve(1);
   m_writers.reserve(1);
   return 
-  initPubType("HeartBeatTopic","HeartBeat",new  HeartBeatPubSubType,&m_heartBeatListener);
+  initPubType("HeartBeatTopic","HeartBeat",new  HeartBeatPubSubType,&m_listener);
 }
 
 
 bool SlaveNodeDPublisher::heartBeatInfoMatched()
 {
-  return m_heartBeatListener.m_matched > 0;
+  return m_listener.m_matched > 0;
 }
 
 bool SlaveNodeDPublisher::publishHeartBeatInfo(HeartBeat &heartBeat)

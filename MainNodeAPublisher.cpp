@@ -86,8 +86,8 @@ bool MainNodeAPublisher::init()
   m_typeVec.reserve(2);
   m_writers.reserve(2);
   return 
-  initPubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,&m_guidanceInfoListener) &&
-  initPubType("GuidanceNodeDStartInfoTopic","GuidanceNodeDStartInfo",new GuidanceNodeDStartInfoPubSubType,&m_guidanceNodeDStartInfoListener);
+  initPubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,&m_listener) &&
+  initPubType("GuidanceNodeDStartInfoTopic","GuidanceNodeDStartInfo",new GuidanceNodeDStartInfoPubSubType,&m_listener);
 }
 
 bool MainNodeAPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
@@ -121,7 +121,7 @@ bool MainNodeAPublisher::init(std::vector<std::string> vt_topicName,std::vector<
 }
 bool MainNodeAPublisher::GuidanceInfoMatched()
 {
-  return m_guidanceInfoListener.m_matched > 0;
+  return m_listener.m_matched > 0;
 }
 bool MainNodeAPublisher::PublishGuidanceInfo(GuidanceInfo &guidanceInfo)
 {
@@ -130,7 +130,7 @@ bool MainNodeAPublisher::PublishGuidanceInfo(GuidanceInfo &guidanceInfo)
 
 bool MainNodeAPublisher::GuidanceNodeDStartInfoMatched()
 {
-  return m_guidanceNodeDStartInfoListener.m_matched > 0;
+  return m_listener.m_matched > 0;
 }
 
 bool MainNodeAPublisher::PublishGuidanceNodeDStartInfo(GuidanceNodeDStartInfo &guidanceNodeDStartInfo)

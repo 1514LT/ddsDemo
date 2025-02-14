@@ -20,7 +20,7 @@ class SlaveNodeDPublisher
 {
 
 private:
-  SlaveNodeDPubListener m_heartBeatListener;
+  SlaveNodeDPubListener m_listener;
   DomainParticipant* m_participant;
   Publisher* m_publisher;
 

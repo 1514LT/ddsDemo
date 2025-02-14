@@ -203,10 +203,12 @@ SlaveNodeBSubscriber::~SlaveNodeBSubscriber()
     m_participant->delete_subscriber(m_subscriber);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
-  if(!m_guidanceInfoListener)
-    delete m_guidanceInfoListener;
-  if(!m_replyinfoListener)
-    delete m_replyinfoListener;
+  // if(!m_guidanceInfoListener)
+  //   delete m_guidanceInfoListener;
+  // if(!m_replyinfoListener)
+  //   delete m_replyinfoListener;
+  if(!m_listener)
+    delete m_listener;
 }
 
 bool SlaveNodeBSubscriber::initSubType(const std::string &topicName, const std::string & typeName, TopicDataType *dataType, DataReaderListener * listener)
@@ -246,11 +248,10 @@ bool SlaveNodeBSubscriber::init()
   {
       return false;
   }
-  m_guidanceInfoListener = new SlaveNodeBSubListener;
-  m_replyinfoListener = new SlaveNodeBSubListener;
+  m_listener = new SlaveNodeBSubListener;
   return
-  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,m_guidanceInfoListener) &&
-  initSubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_replyinfoListener);
+  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,m_listener) &&
+  initSubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_listener);
 }
 bool SlaveNodeBSubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)
 {

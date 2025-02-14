@@ -84,7 +84,7 @@ bool SlaveNodeCPublisher::init()
   m_typeVec.reserve(6);
   m_writers.reserve(6);
   return 
-  initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_replyInfoListener);
+  initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,&m_listener);
 }
 bool SlaveNodeCPublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
 {
@@ -118,7 +118,7 @@ bool SlaveNodeCPublisher::init(std::vector<std::string> vt_topicName,std::vector
 
 bool SlaveNodeCPublisher::replayInfoMatched()
 {
-  return m_replyInfoListener.m_matched > 0;
+  return m_listener.m_matched > 0;
 }
 bool SlaveNodeCPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 {

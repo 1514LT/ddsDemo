@@ -32,7 +32,7 @@ public:
 class SlaveNodeCPublisher
 {
 private:
-  SlaveNodeCPubListener m_replyInfoListener;
+  SlaveNodeCPubListener m_listener;
 
   DomainParticipant* m_participant;
   Publisher* m_publisher;

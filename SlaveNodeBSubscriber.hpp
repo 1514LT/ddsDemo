@@ -16,13 +16,13 @@
 
 #include "SlaveNodeBPublisher.hpp"
 using namespace eprosima::fastdds::dds;
-// class SlaveNodeDSubListener;
+
 class SlaveNodeBSubListener : public DataReaderListener
 {
 private:
   std::atomic_int m_samples;
   std::shared_ptr<SlaveNodeBPublisher> m_publisher;
-  // friend class SlaveNodeDSubListener;
+
 public:
   SlaveNodeBSubListener();
   ~SlaveNodeBSubListener();
@@ -34,7 +34,6 @@ public:
   std::string showResult(std::array<uint8_t, 2> arry);
 };
 
-// class SlaveNodeDSubscriber;
 class SlaveNodeBSubscriber
 {
 private:
@@ -44,9 +43,8 @@ private:
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
 
-  SlaveNodeBSubListener* m_guidanceInfoListener;
-  SlaveNodeBSubListener* m_replyinfoListener;
-  // friend class SlaveNodeDSubscriber;
+  SlaveNodeBSubListener* m_listener;
+
 public:
   SlaveNodeBSubscriber();
   ~SlaveNodeBSubscriber();

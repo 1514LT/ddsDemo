@@ -234,8 +234,8 @@ bool MainNodeASubscriber::init()
       return false;
   }
   return
-  initSubType("ReplyInfoTopic","ReplyInfo",new ReplyInfoPubSubType,&m_replyInfoListener)&&
-  initSubType("HeartBeatTopic","HeartBeat",new HeartBeatPubSubType,&m_heartBeatListener);
+  initSubType("ReplyInfoTopic","ReplyInfo",new ReplyInfoPubSubType,&m_listener)&&
+  initSubType("HeartBeatTopic","HeartBeat",new HeartBeatPubSubType,&m_listener);
 }
 
 bool MainNodeASubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)

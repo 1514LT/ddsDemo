@@ -39,8 +39,7 @@ private:
   Publisher* m_publisher;
   std::vector<TypeSupport> m_typeVec;
   std::vector<std::pair<Topic*,DataWriter*> > m_writers;
-  MainNodeAPubListenner m_guidanceInfoListener;
-  MainNodeAPubListenner m_guidanceNodeDStartInfoListener;
+  MainNodeAPubListenner m_listener;
   
 public:
   MainNodeAPublisher();

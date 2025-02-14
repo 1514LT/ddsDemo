@@ -111,7 +111,7 @@ bool SlaveNodeDSubscriber::init()
       return false;
   }
   return
-  initSubType("GuidanceNodeDStartInfoTopic","GuidanceNodeDStartInfo",new  GuidanceNodeDStartInfoPubSubType,&m_guidanceNodeDStartInfoListener);
+  initSubType("GuidanceNodeDStartInfoTopic","GuidanceNodeDStartInfo",new  GuidanceNodeDStartInfoPubSubType,&m_listener);
 }
 
 

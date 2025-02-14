@@ -48,12 +48,14 @@ SlaveNodeBPublisher::~SlaveNodeBPublisher()
       m_participant->delete_publisher(m_publisher);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
-  if(!m_guidanceInfoListener)
-    delete m_guidanceInfoListener;
-  if(!m_replyInfoListener)
-    delete m_replyInfoListener;
-  if(!m_heartBeatListener)
-    delete m_heartBeatListener;
+  // if(!m_guidanceInfoListener)
+  //   delete m_guidanceInfoListener;
+  // if(!m_replyInfoListener)
+  //   delete m_replyInfoListener;
+  // if(!m_heartBeatListener)
+  //   delete m_heartBeatListener;
+  if(!m_listener)
+    delete m_listener;
 }
 
 
@@ -93,13 +95,12 @@ bool SlaveNodeBPublisher::init()
 
   m_typeVec.reserve(3);
   m_writers.reserve(3);
-  m_replyInfoListener = new SlaveNodeBPubListener;
-  m_guidanceInfoListener = new SlaveNodeBPubListener;
-  m_heartBeatListener = new SlaveNodeBPubListener;
+  m_listener = new SlaveNodeBPubListener;
+
   bool flag = true;
-  flag && initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_replyInfoListener) &&
-  initPubType("GuidanceInfoTopic","GuidanceInfo",new GuidanceInfoPubSubType,m_guidanceInfoListener) &&
-  initPubType("HeartBeatTopic","HeartBeat",new  HeartBeatPubSubType,m_heartBeatListener);
+  flag && initPubType("ReplyInfoTopic","ReplyInfo",new  ReplyInfoPubSubType,m_listener) &&
+  initPubType("GuidanceInfoTopic","GuidanceInfo",new GuidanceInfoPubSubType,m_listener) &&
+  initPubType("HeartBeatTopic","HeartBeat",new  HeartBeatPubSubType,m_listener);
   start(&SlaveNodeBPublisher::handleHeartbeat,this);
   return flag;
 }
@@ -150,9 +151,9 @@ void SlaveNodeBPublisher::handleHeartbeat()
 
 bool SlaveNodeBPublisher::replayInfoMatched()
 {
-  if(!m_replyInfoListener)
+  if(!m_listener)
     return false;
-  return m_replyInfoListener->m_matched > 0;
+  return m_listener->m_matched > 0;
 }
 bool SlaveNodeBPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 {
@@ -161,9 +162,9 @@ bool SlaveNodeBPublisher::publishReplyInfo(ReplyInfo &replyInfo)
 
 bool SlaveNodeBPublisher::guidanceInfoMatched()
 {
-  if(!m_guidanceInfoListener)
+  if(!m_listener)
     return false;
-  return m_guidanceInfoListener->m_matched > 0;
+  return m_listener->m_matched > 0;
 }
 
 bool SlaveNodeBPublisher::publishGuidanceInfo(GuidanceInfo &guidanceInfo)
@@ -173,7 +174,7 @@ bool SlaveNodeBPublisher::publishGuidanceInfo(GuidanceInfo &guidanceInfo)
 
 bool SlaveNodeBPublisher::heartBeatInfoMatched()
 {
-  return m_heartBeatListener->m_matched > 0;
+  return m_listener->m_matched > 0;
 }
 bool SlaveNodeBPublisher::publishHeartBeatInfo(HeartBeat &heartBeat)
 {

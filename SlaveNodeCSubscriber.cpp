@@ -179,7 +179,7 @@ bool SlaveNodeCSubscriber::init()
       return false;
   }
   return
-  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,&m_guidanceInfoListener);
+  initSubType("GuidanceInfoTopic","GuidanceInfo",new  GuidanceInfoPubSubType,&m_listener);
 }
 bool SlaveNodeCSubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)
 {

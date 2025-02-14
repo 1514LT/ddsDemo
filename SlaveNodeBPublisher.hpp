@@ -16,11 +16,9 @@
 
 using namespace eprosima::fastdds::dds;
 
-class SlaveNodeDPubListener;
+
 class SlaveNodeBPubListener :public DataWriterListener
 {
-private:
-  friend class SlaveNodeDPublisher;
 public:
   SlaveNodeBPubListener();
   ~SlaveNodeBPubListener() override;
@@ -30,7 +28,6 @@ public:
   void on_publication_matched(DataWriter * dataWriter, const PublicationMatchedStatus & info) override;
 };
 
-class SlaveNodeDPublisher;
 class SlaveNodeBPublisher
 {
 template <typename Function, typename... Args>
@@ -39,9 +36,7 @@ void start(Function&& f, Args&&... args)
     std::thread(std::forward<Function>(f), std::forward<Args>(args)...).detach();
 }
 private:
-  SlaveNodeBPubListener* m_replyInfoListener;
-  SlaveNodeBPubListener* m_guidanceInfoListener;
-  SlaveNodeBPubListener* m_heartBeatListener;
+  SlaveNodeBPubListener* m_listener;
 
   DomainParticipant* m_participant;
   Publisher* m_publisher;
@@ -49,7 +44,6 @@ private:
   std::vector<TypeSupport> m_typeVec;
 
   std::vector<std::pair<Topic*,DataWriter*> > m_writers;
-  friend class SlaveNodeDPublisher;
 public:
   SlaveNodeBPublisher();
   ~SlaveNodeBPublisher();

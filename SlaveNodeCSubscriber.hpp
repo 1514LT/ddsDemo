@@ -40,7 +40,7 @@ private:
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
 
-  SlaveNodeCSubListener m_guidanceInfoListener;
+  SlaveNodeCSubListener m_listener;
 
 public:
   SlaveNodeCSubscriber();
