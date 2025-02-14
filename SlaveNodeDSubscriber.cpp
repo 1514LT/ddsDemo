@@ -2,7 +2,6 @@
 SlaveNodeDSubListener::SlaveNodeDSubListener()
 :m_samples(0)
 {
-  m_subscriber = std::make_shared<SlaveNodeBSubscriber>();
 }
 
 SlaveNodeDSubListener::~SlaveNodeDSubListener()
@@ -32,7 +31,8 @@ void SlaveNodeDSubListener::on_data_available(DataReader * reader)
   if (reader->get_topicdescription()->get_name() == "GuidanceNodeDStartInfoTopic")
   {
     // start nodeB
-    m_subscriber->init();
+    printf("start nodeB\n");
+    start_nodeB = 1;
   }
 }
 
@@ -41,6 +41,9 @@ SlaveNodeDSubscriber::SlaveNodeDSubscriber()
 m_subscriber(nullptr),
 m_topic(nullptr)
 {
+  start([this](){
+    this->HandleNodeB();
+  });
 }
 
 SlaveNodeDSubscriber::~SlaveNodeDSubscriber()
@@ -55,6 +58,20 @@ SlaveNodeDSubscriber::~SlaveNodeDSubscriber()
     m_participant->delete_subscriber(m_subscriber);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
+}
+
+void SlaveNodeDSubscriber::HandleNodeB()
+{
+  while (true)
+  {
+    if(start_nodeB == 1)
+    {
+      m_nodeb_subscriber.init();
+      break;
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
+  }
+  
 }
 bool SlaveNodeDSubscriber::initSubType(const std::string &topicName, const std::string & typeName, TopicDataType *dataType, DataReaderListener * listener)
 {

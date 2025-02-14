@@ -77,33 +77,76 @@ void MainNodeASubListener::on_data_available(DataReader * reader)
     {
       if (info.valid_data)
       {
-        std::cout << (int)msg.isOnline() << std::endl;
         is_nodeD_online = 1;
+        lastHeartbeatTime = getCurrentTimeMillis();
       }
     }
   }
 }
-void MainNodeASubscriber::HandleHeartBeat()
+
+void MainNodeASubscriber::initNodeA()
 {
-  while (true)
+  stopNodeA = false;
+  m_nodeA_publisher = new MainNodeAPublisher;
+  m_nodeA_publisher->init();
+  start([this](){
+    this->Run(m_nodeA_publisher);
+  });
+  start([this](){
+    this->HandleTimeOut(m_nodeA_publisher);
+  });
+  while(true)
   {
-    if(!is_nodeD_online)
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval));
+  }
+}
+void MainNodeASubscriber::HandleTimeOut(MainNodeAPublisher* nodeA_publisher)
+{
+  while (!stopNodeA)
+  {
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval)); 
+    if(is_nodeD_online == 0)
     {
-      if(m_publisher->GuidanceNodeDStartInfoMatched())
+      std::cout << "send GuidanceNodeDStartInfo" << std::endl;
+      if(nodeA_publisher->GuidanceNodeDStartInfoMatched())
       {
         GuidanceNodeDStartInfo guidanceNodeDStartInfo;
         guidanceNodeDStartInfo.isStart(0x01);
-        m_publisher->PublishGuidanceNodeDStartInfo(guidanceNodeDStartInfo);
+        nodeA_publisher->PublishGuidanceNodeDStartInfo(guidanceNodeDStartInfo);
       }
+      break;
+    }
+  }
+}
+
+void MainNodeASubscriber::HandleHeartBeat()
+{
+  lastHeartbeatTime = getCurrentTimeMillis();
+  while (!stopNodeA)
+  {
+    currentTime = getCurrentTimeMillis();
+    if(currentTime - lastHeartbeatTime > 10000)
+    {
+      printf("Time Out\n");
+      is_nodeD_online = 0;
+      break;
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval)); 
   }
+  // creat new publisher
+  Stop();
+  std::this_thread::sleep_for(std::chrono::milliseconds(4*m_timeinterval));
+  delete m_nodeA_publisher; 
+  start([this](){
+    this->initNodeA();
+  });
 }
-void MainNodeASubscriber::Run()
+
+void MainNodeASubscriber::Run(MainNodeAPublisher* nodeA_publisher)
 {
-  while (true)
+  while (!stopNodeA)
   {
-    if(m_publisher->GuidanceInfoMatched())
+    if(nodeA_publisher->GuidanceInfoMatched())
     {
       GuidanceInfo guidanceInfo;
       guidanceInfo.beatCount(11111);
@@ -135,10 +178,16 @@ void MainNodeASubscriber::Run()
       guidanceInfo.Third(First);
       guidanceInfo.Fourth(First);
       guidanceInfo.Fifth(First);
-      m_publisher->PublishGuidanceInfo(guidanceInfo);
+      std::cout << "PublishGuidanceInfo" << std::endl;
+      nodeA_publisher->PublishGuidanceInfo(guidanceInfo);
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(m_timeinterval)); 
   }
+}
+
+void MainNodeASubscriber::Stop()
+{
+  stopNodeA = true;
 }
 
 MainNodeASubscriber::MainNodeASubscriber()
@@ -147,10 +196,12 @@ m_subscriber(nullptr),
 m_topic(nullptr),
 m_timeinterval(5000)
 {
-  // m_publisher = std::make_shared<MainNodeAPublisher>();
-  // m_publisher->init();
-  // start(&MainNodeASubscriber::HandleHeartBeat,this);
-  // start(&MainNodeASubscriber::Run,this);
+  start([this](){
+    this->initNodeA();
+  });
+  start([this](){
+    this->HandleHeartBeat();
+  });
 }
 
 MainNodeASubscriber::~MainNodeASubscriber()

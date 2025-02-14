@@ -20,11 +20,18 @@
 
 using namespace eprosima::fastdds::dds;
 
+
+long long getCurrentTimeMillis()
+{
+  auto now = std::chrono::system_clock::now();
+  auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch());
+  return duration.count();
+}
+
 class MainNodeASubListener :public DataReaderListener
 {
 private:
   std::atomic_int m_samples;
-
 public:
   MainNodeASubListener();
   ~MainNodeASubListener();
@@ -51,8 +58,10 @@ private:
   MainNodeASubListener m_replyInfoListener;
   MainNodeASubListener m_heartBeatListener;
 
-  std::shared_ptr<MainNodeAPublisher> m_publisher;
+  MainNodeAPublisher* m_nodeA_publisher;
   int m_timeinterval;
+  long long currentTime;
+  bool stopNodeA = false;
 public:
   MainNodeASubscriber();
   ~MainNodeASubscriber();
@@ -60,8 +69,11 @@ public:
   bool init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id = 0);
 
   bool initSubType(const std::string &topicName, const std::string & typeName, TopicDataType *dataType, DataReaderListener * listener);
+  void initNodeA();
+  void HandleTimeOut(MainNodeAPublisher* nodeA_publisher);
   void HandleHeartBeat();
-  void Run();
+  void Run(MainNodeAPublisher* nodeA_publisher);
+  void Stop();
 };
 
 
