@@ -42,7 +42,7 @@ public:
   bool telemetryReplyMatched();
   bool publishTelemetryReply(TelemetryReply & telemetryReply);
 private:
-  SlavenodePubListener m_telemetryReplyListener;
+  SlavenodePubListener m_listener;
   DomainParticipant* m_participant;
   Publisher* m_publisher;
   std::vector<TypeSupport> m_typeVec;

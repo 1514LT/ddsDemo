@@ -258,12 +258,12 @@ bool SlavenodeSubscriber::init()
       return false;
   }
   return
-  initSubType("TimeBroadcastTopic","TimeBroadcast",new  TimeBroadcastPubSubType,&m_timeBroadcastListener) &&
-  initSubType("TrackBroadcastTopic","TrackBroadcast",new TrackBroadcastPubSubType,&m_trackBroadcastListener) &&
-  initSubType("AttitudeBroadcastTopic","AttitudeBroadcast",new AttitudeBroadcastPubSubType,&m_AttitudeBroadcastListener) &&
-  initSubType("TrackPredictTopic","TrackPredict",new TrackPredictPubSubType,&m_trackPredictListener) &&
-  initSubType("TelemetryRequestTopic","TelemetryRequest",new TelemetryRequestPubSubType,&m_telemetryRequestListener) &&
-  initSubType("ParamPackageTopic","ParamPackage",new ParamPackagePubSubType,&m_paramPackageListener);
+  initSubType("TimeBroadcastTopic","TimeBroadcast",new  TimeBroadcastPubSubType,&m_listener) &&
+  initSubType("TrackBroadcastTopic","TrackBroadcast",new TrackBroadcastPubSubType,&m_listener) &&
+  initSubType("AttitudeBroadcastTopic","AttitudeBroadcast",new AttitudeBroadcastPubSubType,&m_listener) &&
+  initSubType("TrackPredictTopic","TrackPredict",new TrackPredictPubSubType,&m_listener) &&
+  initSubType("TelemetryRequestTopic","TelemetryRequest",new TelemetryRequestPubSubType,&m_listener) &&
+  initSubType("ParamPackageTopic","ParamPackage",new ParamPackagePubSubType,&m_listener);
 }
 bool SlavenodeSubscriber::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataReaderListener *> vt_listener,DomainId_t domain_id)
 {

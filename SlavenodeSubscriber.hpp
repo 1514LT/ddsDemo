@@ -52,13 +52,7 @@ private:
   Topic * m_topic;
   std::vector<TypeSupport> m_type;
 
-  SlavenodeSubListener m_timeBroadcastListener;
-  SlavenodeSubListener m_trackBroadcastListener;
-  SlavenodeSubListener m_AttitudeBroadcastListener;
-  SlavenodeSubListener m_trackPredictListener;
-  SlavenodeSubListener m_telemetryRequestListener;
-
-  SlavenodeSubListener m_paramPackageListener;
+  SlavenodeSubListener m_listener;
 };
 
 

@@ -115,17 +115,17 @@ bool MainnodePublisher::init()
     m_typeVec.reserve(6);
     m_writers.reserve(6);
     return 
-    initPubType("TimeBroadcastTopic","TimeBroadcast",new  TimeBroadcastPubSubType,&m_timeBroadcastListener) &&
-    initPubType("TrackBroadcastTopic","TrackBroadcast",new TrackBroadcastPubSubType,&m_trackBroadcastListener) &&
-    initPubType("AttitudeBroadcastTopic","AttitudeBroadcast",new AttitudeBroadcastPubSubType,&m_AttitudeBroadcastListener) &&
-    initPubType("TrackPredictTopic","TrackPredict",new TrackPredictPubSubType,&m_trackPredictListener) &&
-    initPubType("TelemetryRequestTopic","TelemetryRequest",new TelemetryRequestPubSubType,&m_telemetryRequestListener) &&
-    initPubType("ParamPackageTopic","ParamPackage",new ParamPackagePubSubType,&m_paramPackageListener);
+    initPubType("TimeBroadcastTopic","TimeBroadcast",new  TimeBroadcastPubSubType,&m_listener) &&
+    initPubType("TrackBroadcastTopic","TrackBroadcast",new TrackBroadcastPubSubType,&m_listener) &&
+    initPubType("AttitudeBroadcastTopic","AttitudeBroadcast",new AttitudeBroadcastPubSubType,&m_listener) &&
+    initPubType("TrackPredictTopic","TrackPredict",new TrackPredictPubSubType,&m_listener) &&
+    initPubType("TelemetryRequestTopic","TelemetryRequest",new TelemetryRequestPubSubType,&m_listener) &&
+    initPubType("ParamPackageTopic","ParamPackage",new ParamPackagePubSubType,&m_listener);
 }
 
 bool MainnodePublisher::timeBroadcastMatched()
 {
-    return m_timeBroadcastListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishTimeBroadcast(TimeBroadcast &timeBroadcast)
@@ -135,7 +135,7 @@ bool MainnodePublisher::publishTimeBroadcast(TimeBroadcast &timeBroadcast)
 
 bool MainnodePublisher::trackBroadcastMatched()
 {
-    return m_trackBroadcastListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishTrackBroadcast(TrackBroadcast &trackBroadcast)
@@ -145,7 +145,7 @@ bool MainnodePublisher::publishTrackBroadcast(TrackBroadcast &trackBroadcast)
 
 bool MainnodePublisher::attitudeBroadcastMatched()
 {
-    return m_AttitudeBroadcastListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishAttitudeBroadcast(AttitudeBroadcast &attitudeBraodcast)
@@ -155,7 +155,7 @@ bool MainnodePublisher::publishAttitudeBroadcast(AttitudeBroadcast &attitudeBrao
 
 bool MainnodePublisher::trackPredictMatched()
 {
-    return m_trackPredictListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishTrackPredict(TrackPredict &trackPredict)
@@ -165,7 +165,7 @@ bool MainnodePublisher::publishTrackPredict(TrackPredict &trackPredict)
 
 bool MainnodePublisher::telemetryRequestMatched()
 {
-    return m_telemetryRequestListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishTelemetryRequest(TelemetryRequest &telemetryRequest)
@@ -175,7 +175,7 @@ bool MainnodePublisher::publishTelemetryRequest(TelemetryRequest &telemetryReque
 
 bool MainnodePublisher::paramPackageMatched()
 {
-    return m_paramPackageListener.m_matched > 0;
+    return m_listener.m_matched > 0;
 }
 
 bool MainnodePublisher::publishParamPackage(ParamPackage &paramPackage)

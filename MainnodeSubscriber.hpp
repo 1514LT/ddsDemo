@@ -52,7 +52,6 @@ private:
     MainnodeSubListener m_listener;
 
 
-    MainnodeSubListener m_telemetryReplyListener;
 
 
     

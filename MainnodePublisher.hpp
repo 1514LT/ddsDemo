@@ -57,13 +57,7 @@ private:
     bool initPubType(const std::string & topicName, const std::string & typeName, TopicDataType * dataType, DataWriterListener * listener);
 
 private:
-    MainnodePubListener m_timeBroadcastListener;
-    MainnodePubListener m_trackBroadcastListener;
-    MainnodePubListener m_AttitudeBroadcastListener;
-    MainnodePubListener m_trackPredictListener;
-    MainnodePubListener m_telemetryRequestListener;
-    MainnodePubListener m_telemetryReplyListener;
-    MainnodePubListener m_paramPackageListener;
+    MainnodePubListener m_listener;
 
     DomainParticipant* m_participant;
     Publisher* m_publisher;

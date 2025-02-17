@@ -85,7 +85,7 @@ bool SlavenodePublisher::init()
     m_typeVec.reserve(1);
     m_writers.reserve(1);
     return 
-    initPubType("TelemetryReplyTopic","TelemetryReply",new TelemetryReplyPubSubType,&m_telemetryReplyListener);
+    initPubType("TelemetryReplyTopic","TelemetryReply",new TelemetryReplyPubSubType,&m_listener);
 }
 bool SlavenodePublisher::init(std::vector<std::string> vt_topicName,std::vector<std::string> vt_typeName,std::vector<TopicDataType *> vt_dataType,std::vector<DataWriterListener *> vt_listener,DomainId_t domain_id)
 {
@@ -120,7 +120,7 @@ bool SlavenodePublisher::init(std::vector<std::string> vt_topicName,std::vector<
 
 bool SlavenodePublisher::telemetryReplyMatched()
 {
-  return m_telemetryReplyListener.m_matched > 0;
+  return m_listener.m_matched > 0;
 }
 
 bool SlavenodePublisher::publishTelemetryReply(TelemetryReply & telemetryReply)

@@ -141,5 +141,5 @@ bool MainnodeSubscriber::init()
         return false;
     }
     return
-    initSubType("TelemetryReplyTopic","TelemetryReply",new TelemetryReplyPubSubType,&m_telemetryReplyListener);
+    initSubType("TelemetryReplyTopic","TelemetryReply",new TelemetryReplyPubSubType,&m_listener);
 }
