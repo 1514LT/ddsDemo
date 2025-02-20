@@ -48,12 +48,6 @@ SlaveNodeBPublisher::~SlaveNodeBPublisher()
       m_participant->delete_publisher(m_publisher);
   }
   DomainParticipantFactory::get_instance()->delete_participant(m_participant);
-  // if(!m_guidanceInfoListener)
-  //   delete m_guidanceInfoListener;
-  // if(!m_replyInfoListener)
-  //   delete m_replyInfoListener;
-  // if(!m_heartBeatListener)
-  //   delete m_heartBeatListener;
   if(!m_listener)
     delete m_listener;
 }
@@ -142,10 +136,9 @@ void SlaveNodeBPublisher::handleHeartbeat()
     {
       HeartBeat heartBeat;
       heartBeat.isOnline(0x01);
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
       publishHeartBeatInfo(heartBeat);
     }
-    
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000)); 
   }
 }
 
