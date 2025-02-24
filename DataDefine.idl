@@ -1,0 +1,17 @@
+struct Target
+{
+    unsigned long index;
+    string message;
+};
+
+struct ReplyInfo
+{
+  octet is_recved;
+};
+// participant :   0->main 1->slave
+// transportType : 0->SHM 1->UDP 2->TCP
+struct RestartInfo
+{
+  octet participant;
+  octet transportType;
+};

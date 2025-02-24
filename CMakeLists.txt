@@ -1,0 +1,44 @@
+cmake_minimum_required(VERSION 3.12)
+project(TransportChangeDemo LANGUAGES CXX)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+set(CMAKE_BUILD_TYPE DEBUG)
+# set(ARM64 ON)
+add_library(DDSBase
+            SHARED
+            Main.cpp
+            Slave.cpp
+            Leader.cpp
+            Gloable.cpp
+            Transport.cpp
+            DataDefine.cxx 
+            DataDefinePubSubTypes.cxx
+            MainPublisher.cpp
+            MainSubscriber.cpp
+            SlavePublisher.cpp
+            SlaveSubscriber.cpp)   
+
+add_executable(${PROJECT_NAME} ${DDSBase} main.cpp)
+                               
+if(DEFINED ARM64)
+link_directories( ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64)
+target_link_libraries(${PROJECT_NAME}
+                      DDSBase 
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastrtps.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libfastcdr.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_arm64/libtinyxml2.so
+                      pthread)
+else()
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib_x86)
+target_link_libraries(${PROJECT_NAME}
+                      DDSBase 
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastrtps.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libfastcdr.so
+                      ${CMAKE_CURRENT_SOURCE_DIR}/lib_x86/libtinyxml2.so
+                      pthread)
+endif()
+
+
